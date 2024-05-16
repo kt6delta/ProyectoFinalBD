@@ -12,5 +12,5 @@ export default defineNuxtConfig({
       exclude: ["Editor", "Chart"]
     }
   },
-  css: ["primevue/resources/themes/lara-dark-indigo/theme.css"]
+  css: ["primevue/resources/themes/aura-light-noir/theme.css"]
 })
