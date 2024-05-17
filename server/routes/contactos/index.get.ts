@@ -3,10 +3,11 @@ import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
 export default defineEventHandler(async (event) => {
   try {
     const connection = await abrirConexion();
-    // Aquí podrías realizar alguna operación con la base de datos.
+    const result = await connection.execute(`SELECT * FROM fase`)
     await cerrarConexion(connection);
-    return { success: true, message: 'Conexión a la base de datos exitosa' };
+    return result.rows;
   } catch (error) {
+    console.error(error);
     return { success: false, message: 'Error al conectar a la base de datos' };
   }
 });

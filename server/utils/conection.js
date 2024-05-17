@@ -6,9 +6,8 @@ export async function abrirConexion() {
     const connection = await oracledb.getConnection({
       user: process.env.PASSWORD,
       password: process.env.PASSWORD,
-      connectionString: "localhost:1521/xe"
+      connectString: 'localhost:1521/XE'
     });
-    console.log('Conectado a la base');
     return connection;
   } catch (err) {
     console.error(err);
