@@ -1,85 +1,37 @@
 <script setup>
-const menuitems = [
+import { ref } from "vue";
+import { Icon } from '#components';
+const items = ref([
   {
-    title: "Features",
-    path: "#",
-  },
-  {
-    title: "Pricing",
-    path: "/pricing",
-  },
-  {
-    title: "About",
-    path: "/about",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-  },
-];
-
-const open = ref(false);
+    label: 'anonimo',
+    root: true
+  }
+]);
 </script>
 
 <template>
   <LandingContainer>
-    <header class="flex flex-col lg:flex-row justify-between items-center my-5">
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg"
-          ><span class="font-bold text-slate-800">Nuxt</span
-          ><span class="text-slate-500">ship</span>
-        </a>
-        <div class="block lg:hidden">
-          <button @click="open = !open" class="text-gray-800">
-            <svg
-              fill="currentColor"
-              class="w-4 h-4"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path
-                v-show="open"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M18.278 16.864a1 1 0 01-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 01-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 011.414-1.414l4.829 4.828 4.828-4.828a1 1 0 111.414 1.414l-4.828 4.829 4.828 4.828z"
-              ></path>
-              <path
-                v-show="!open"
-                fill-rule="evenodd"
-                d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"
-              ></path>
-            </svg>
-          </button>
+    <div class="card">
+      <MegaMenu :model="items" class="p-4 bg-surfrace-0 dark:bg-surface-900 shadow-md" style="border-radius: 3rem">
+        <template #start>
+          <div class="ml-[1vw]">        
+            <Avatar label="U" size="xlarge" class="mr-2" style="background-color: #000000; color: #ffffff" shape="circle" />
         </div>
-      </div>
-      <nav
-        class="w-full lg:w-auto mt-2 lg:flex lg:mt-0"
-        :class="{ block: open, hidden: !open }"
-      >
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
-          <li v-for="item of menuitems">
-            <a
-              :href="item.path"
-              class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900"
-            >
-              {{ item.title }}
-            </a>
-          </li>
-        </ul>
-        <div class="lg:hidden flex items-center mt-3 gap-4">
-          <LandingLink href="#" styleName="muted" block size="md"
-            >Log in</LandingLink
-          >
-          <LandingLink href="#" size="md" block>Sign up</LandingLink>
-        </div>
-      </nav>
-      <div>
-        <div class="hidden lg:flex items-center gap-4">
-          <a href="#">Log in</a>
-          <LandingLink href="#" size="md">Sign up</LandingLink>
-        </div>
-      </div>
-    </header>
+        </template>
+        <template #item="{ item }">
+          <a v-if="item.root" v-ripple
+            class="flex justify-center items-center cursor-pointer px-3 py-2 overflow-hidden relative font-semibold text-xl uppercase"
+            style="border-radius: 2rem;">
+            <span class="ml-2">{{ item.label }}</span>
+          </a>
+        </template>
+        <template #end>
+          <a href="/" class="text-lg"><span class="font-bold text-slate-800">Company</span><span
+              class="text-slate-500">Job</span>
+              <Icon name="hugeicons:new-job" color="currentColor" size="48"/>
+          </a>    
+        </template>
+      </MegaMenu>
+    </div>
   </LandingContainer>
 </template>

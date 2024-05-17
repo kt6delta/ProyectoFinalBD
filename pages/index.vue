@@ -1,16 +1,105 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/hello')
 definePageMeta({
   layout: "landing",
 });
+
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const items = [
+  {
+    label: 'Update',
+    icon: 'pi pi-refresh',
+    command: () => {
+      toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
+    }
+  },
+  {
+    label: 'Delete',
+    icon: 'pi pi-times',
+    command: () => {
+      toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
+    }
+  },
+];
+
+const save = () => {
+  toast.add({ severity: 'success', summary: 'Success', detail: 'Data Saved', life: 3000 });
+};
+
+import { ref } from "vue";
 </script>
 
 <template>
-  <pre>{{ data }}</pre>
   <LandingContainer>
-    <LandingHero></LandingHero>
-    <LandingFeatures></LandingFeatures>
-    <LandingLogos></LandingLogos>
-    <LandingCta></LandingCta>
+    <Card class="mt-[5vh]" style="overflow: hidden">
+      <template #header>
+        <LandingSectionhead>
+          <template v-slot:title>Registro</template>
+          <template v-slot:desc>We are here to help.</template>
+        </LandingSectionhead>
+      </template>
+      <template #content>
+        <div class="grid md:grid-cols-2 gap-10 mx-auto max-w-4xl mt-16">
+          <!-- input1 -->
+          <InputGroup>
+            <InputGroupAddon class="bg-black text-white">.00</InputGroupAddon>
+            <InputText placeholder="Nombre" />
+          </InputGroup>
+
+          <InputGroup>
+            <InputGroupAddon class="bg-black text-white">
+              <Icon name="ic:baseline-alternate-email" color="white" />
+            </InputGroupAddon>
+            <InputText placeholder="correo" />
+          </InputGroup>
+          <!-- input pequeños -->
+          <div class="card flex flex-col md:flex-row gap-3">
+
+            <InputGroup>
+              <InputGroupAddon class="bg-black text-white">
+                <Icon name="majesticons:calendar" color="white" />
+              </InputGroupAddon>
+              <Calendar v-model="date" dateFormat="dd/mm/yy" />
+            </InputGroup>
+
+            <InputGroup>
+              <InputGroupAddon>$</InputGroupAddon>
+              <InputNumber placeholder="Price" />
+            </InputGroup>
+
+            <InputGroup>
+              <InputGroupAddon>www</InputGroupAddon>
+              <InputText placeholder="Website" />
+            </InputGroup>
+          </div>
+
+          <InputGroup>
+            <InputGroupAddon>
+              <i class="pi pi-user"></i>
+            </InputGroupAddon>
+            <InputText placeholder="Username" />
+          </InputGroup>
+
+          <InputGroup>
+            <InputGroupAddon>$</InputGroupAddon>
+            <InputNumber placeholder="Price" />
+            <InputGroupAddon>.00</InputGroupAddon>
+          </InputGroup>
+
+        </div>
+      </template>
+      <template #footer>
+        <div class="flex justify-center align-middle gap-3 mt-1">
+          <SplitButton label="Save" :model="items" @click="save" icon="pi pi-plus" rounded severity="contrast"
+            class="text-white bg-black px-2 py-2"></SplitButton>
+        </div>
+      </template>
+    </Card>
+    <div class="card flex flex-wrap items-center justify-center gap-3 mt-16">
+      <InlineMessage severity="success">Success Message</InlineMessage>
+      <InlineMessage severity="warn">Warning Message</InlineMessage>
+      <InlineMessage severity="error">Error Message</InlineMessage>
+    </div>
   </LandingContainer>
 </template>
