@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
-    'nuxt-primevue'
+    'nuxt-primevue',
   ],
   primevue: {
     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",

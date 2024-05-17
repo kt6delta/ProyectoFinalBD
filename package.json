@@ -10,7 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.2",
     "express": "^4.19.2",
+    "oracledb": "^6.5.0",
+    "pdfkit": "^0.15.0",
     "primevue": "^3.38.0"
   },
   "devDependencies": {
