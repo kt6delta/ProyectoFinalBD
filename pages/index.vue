@@ -28,6 +28,15 @@ const save = () => {
 };
 
 import { ref } from "vue";
+
+const selectedCity = ref();
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
 </script>
 
 <template>
@@ -41,52 +50,58 @@ import { ref } from "vue";
       </template>
       <template #content>
         <div class="grid md:grid-cols-2 gap-10 mx-auto max-w-4xl mt-16">
-          <!-- input1 -->
+          <!-- input General -->
           <InputGroup>
-            <InputGroupAddon class="bg-black text-white">.00</InputGroupAddon>
+            <InputGroupAddon class="bg-black text-white">
+              <Icon name="mdi:company" color="white" size="22" />
+            </InputGroupAddon>
+            <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="cargo" class="w-full md:w-[14rem]" />
+          </InputGroup>
+
+          <InputGroup>
+            <InputGroupAddon class="bg-black text-white">
+              <Icon name="material-symbols:person-outline" color="white" size="22" />
+            </InputGroupAddon>
             <InputText placeholder="Nombre" />
           </InputGroup>
 
           <InputGroup>
             <InputGroupAddon class="bg-black text-white">
-              <Icon name="ic:baseline-alternate-email" color="white" />
+              <Icon name="material-symbols:person-outline" color="white" size="22" />
             </InputGroupAddon>
-            <InputText placeholder="correo" />
+            <InputText placeholder="Apellido" />
           </InputGroup>
+
           <!-- input pequeños -->
           <div class="card flex flex-col md:flex-row gap-3">
 
             <InputGroup>
               <InputGroupAddon class="bg-black text-white">
-                <Icon name="majesticons:calendar" color="white" />
+                <Icon name="majesticons:calendar" color="white" size="22" />
               </InputGroupAddon>
-              <Calendar v-model="date" dateFormat="dd/mm/yy" />
+              <Calendar dateFormat="dd/mm/yy" />
             </InputGroup>
 
             <InputGroup>
-              <InputGroupAddon>$</InputGroupAddon>
-              <InputNumber placeholder="Price" />
+              <InputGroupAddon class="bg-black text-white">
+                <Icon name="majesticons:calendar" color="white" size="22" />
+              </InputGroupAddon>
+              <Calendar dateFormat="dd/mm/yy" />
             </InputGroup>
 
             <InputGroup>
-              <InputGroupAddon>www</InputGroupAddon>
-              <InputText placeholder="Website" />
+              <InputGroupAddon class="bg-black text-white">
+                <Icon name="majesticons:calendar" color="white" size="22" />
+              </InputGroupAddon>
+              <Calendar dateFormat="dd/mm/yy" />
             </InputGroup>
           </div>
-
           <InputGroup>
-            <InputGroupAddon>
-              <i class="pi pi-user"></i>
+            <InputGroupAddon class="bg-black text-white">
+              <Icon name="ic:baseline-alternate-email" color="white" size="22" />
             </InputGroupAddon>
-            <InputText placeholder="Username" />
+            <InputText placeholder="correo" />
           </InputGroup>
-
-          <InputGroup>
-            <InputGroupAddon>$</InputGroupAddon>
-            <InputNumber placeholder="Price" />
-            <InputGroupAddon>.00</InputGroupAddon>
-          </InputGroup>
-
         </div>
       </template>
       <template #footer>
