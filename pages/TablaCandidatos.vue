@@ -3,6 +3,10 @@ definePageMeta({
     layout: "landing",
 });
 
+const selectedProduct = ref();
+const metaKey = ref(true);
+
+
 import { ref, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { ProductService } from '@/service/ProductService';
@@ -69,14 +73,14 @@ const getOrderSeverity = (order) => {
 <template>
     <LandingContainer>
         <LandingSectionhead>
-            <template v-slot:title>Requerimientos Pendientes</template>
-            <template v-slot:desc>FECHA Se muestra solo para PePITO esta lista y quiero una tabla desplegable que dentro
-                contenga un componente de inputs para editar.</template>
+            <template v-slot:title>Candidatos que cumplen Requerimientos</template>
+            <template v-slot:desc>FECHA Se muestra solo n Requerimiento esta lista de candidatos y quiero una tabla desplegable que dentro
+                contenga un componente de hojas de vida.</template>
         </LandingSectionhead>
 
         <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-12">
             <div class="card">
-                <DataTable v-model:expandedRows="expandedRows" :value="products" dataKey="id" @rowExpand="onRowExpand"
+                <DataTable v-model:selection="selectedProduct" v-model:expandedRows="expandedRows" :value="products" dataKey="id" @rowExpand="onRowExpand"
                     @rowCollapse="onRowCollapse" tableStyle="min-width: 60rem">
                     <template #header>
                         <div class="flex flex-wrap justify-end gap-2">
@@ -84,6 +88,8 @@ const getOrderSeverity = (order) => {
                             <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
                         </div>
                     </template>
+                    <Column selectionMode="multiple" headerStyle="width: 3rem" class="bg-slate-200"></Column>
+                    <Column field="envio" header="Envio"></Column>
                     <Column expander style="width: 5rem" />
                     <Column field="name" header="Name"></Column>
                     <Column header="Image">
@@ -110,12 +116,7 @@ const getOrderSeverity = (order) => {
                     </Column>
                     <template #expansion="slotProps">
                         <div class="p-3">
-                            <h>Componente para editar Requerimiento</h>
-                            <Icon name="bxs:pencil" size="25" />
-                        </div>
-                        <div class="p-3">
-                            <h>Componente para editar Convocatoria (correo)</h>
-                            <Icon name="bxs:pencil" size="25" />
+                            <h>hoja de vida</h>
                         </div>
                     </template>
                 </DataTable>

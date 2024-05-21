@@ -45,7 +45,7 @@ const cities = ref([
       <template #header>
         <LandingSectionhead>
           <template v-slot:title>Crear Requerimiento</template>
-          <template v-slot:desc>We find the best people.</template>
+          <template v-slot:desc>We find the best people.<br> fecha:</template>
         </LandingSectionhead>
       </template>
       <template #content>

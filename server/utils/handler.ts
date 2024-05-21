@@ -1,5 +1,6 @@
 import type { EventHandler, EventHandlerRequest } from 'h3'
 
+//manejador de eventos
 export const defineWrappedResponseHandler = <T extends EventHandlerRequest, D> (
   handler: EventHandler<T, D>
 ): EventHandler<T, D> =>

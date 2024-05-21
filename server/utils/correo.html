@@ -1,0 +1,123 @@
+<!DOCTYPE html><!--Soporte limitado de css toca con tablas-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Verificación de correo electrónico</title>
+    <style>
+        h1{
+            font-size: 20px;
+            margin: 0;
+        }
+        .all {
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #EBEBEB;
+            color: #262626;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 40vw;
+            padding: 20px;
+            background-color: #FCFCFC;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            border-top: 15px solid #2b2c32;
+        }
+
+        .email-container a.btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0;
+            color: #ffffff;
+            background-color: #F4CC66;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        a{
+            margin: 0;
+        }
+
+        .center-div2 p {
+            font-family: serif;
+            text-align: center;
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .center-div2 {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        figure {
+            width: 100%;
+            max-width: 40vw;
+            margin: 0;
+        }
+
+        img {
+            width: 20vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="all">
+    <header>
+        <table width="100%" align="center">
+            <tr>
+                <td align="center">
+                    <figure>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/inventariomaquinas-t.appspot.com/o/logo.png?alt=media&token=a9ce6750-0a3b-4098-b482-d99f3cb74975" alt="logo">
+                    </figure>
+                </td>
+            </tr>
+        </table>
+    </header>
+    <div>
+        <table class="email-container" width="100%" align="center">
+            <tr>
+                <td align="center">
+                    <h1>Hola, {{username}}</h1>
+                    <p>Por favor, haz clic en el siguiente botón para verificar tu correo electrónico:</p>
+                    <a href="{{url}}" class="btn">Verificar</a>
+                    <p>Si no puedes hacer clic en el botón, copia y pega el siguiente enlace en tu navegador:</p>
+                    <a href="{{url}}" style="width: 100%; max-width: inherit;">{{url}}</a>
+                    <p>Después, te pediremos que inicies sesión. Asegúrate de utilizar la dirección de correo electrónico en la
+                        que
+                        quieres recibir mensajes, invitaciones, solicitudes y otros mensajes de correo electrónico.</p>
+                    <p> ¡Gracias por usar nuestros servicios! <br>
+                        El equipo de TecnimontacargasDual
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <footer>
+        <table class="center-div2" width="100%" align="center">
+            <tr>
+                <td align="center">
+                    <p>©TecnimontacargasDual. Todos los derechos reservados. </p>
+
+                    <p>Este email estaba dirigido a {{username}}. Averigua por qué incluimos esto.</p>
+
+                    <p> necesitas ayuda o tienes alguna pregunta, ponte en contacto con el Servicio de atención al cliente de
+                        TecnimontacargasDual. </p>
+
+                    <p>TecnimontacargasDual es un nombre comercial registrado en Colombia como una sociedad limitada, número de
+                        Nit
+                        900197587-1.</p>
+                    <p>Oficina registrada: Bogota, Fontibon versalles</p>
+                </td>
+            </tr>
+        </table>
+    </footer>
+</div>
+</body>
+
+</html>

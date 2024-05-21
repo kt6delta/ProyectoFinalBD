@@ -44,7 +44,7 @@ const cities = ref([
     <Card class="mt-[5vh]" style="overflow: hidden">
       <template #header>
         <LandingSectionhead>
-          <template v-slot:title>Registro</template>
+          <template v-slot:title>Registro Empleado</template>
           <template v-slot:desc>We are here to help.</template>
         </LandingSectionhead>
       </template>
