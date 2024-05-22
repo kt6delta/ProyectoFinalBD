@@ -3,40 +3,45 @@ definePageMeta({
   layout: "landing",
 });
 
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
 
-const items = [
+const BtnItems = [
   {
     label: 'Update',
     icon: 'pi pi-refresh',
     command: () => {
-      toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
+      const router = useRouter();
+      router.push('/requerimiento');
+      console.log('update');
     }
   },
   {
     label: 'Delete',
     icon: 'pi pi-times',
     command: () => {
-      toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
+      const router = useRouter();
+      router.push('/requerimiento');
+      console.log('delete');
     }
   },
 ];
 
 const save = () => {
-  toast.add({ severity: 'success', summary: 'Success', detail: 'Data Saved', life: 3000 });
+  const router = useRouter();
+  router.push('/requerimiento');
 };
 
 import { ref } from "vue";
 
-const selectedCity = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
+const selectedCargos = ref();
+let cargos = ref([await $fetch('/empleados')]);
+cargos = cargos.value[0];
+
+let nombre = ref(null);
+let apellido = ref(null);
+let born = ref(null);
+let email = ref(null);
+const search = ref();
+const value = ref();
 </script>
 
 <template>
@@ -55,58 +60,48 @@ const cities = ref([
             <InputGroupAddon class="bg-black text-white">
               <Icon name="mdi:company" color="white" size="22" />
             </InputGroupAddon>
-            <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="cargo" class="w-full md:w-[14rem]" />
+            <Dropdown v-model="selectedCargos" :options="cargos" optionLabel="name" placeholder="cargo"
+              class="w-full md:w-[14rem]" />
           </InputGroup>
 
           <InputGroup>
             <InputGroupAddon class="bg-black text-white">
               <Icon name="material-symbols:person-outline" color="white" size="22" />
             </InputGroupAddon>
-            <InputText placeholder="Nombre" />
+            <InputText type="text" placeholder="Nombre" v-model="nombre" />
           </InputGroup>
 
           <InputGroup>
             <InputGroupAddon class="bg-black text-white">
               <Icon name="material-symbols:person-outline" color="white" size="22" />
             </InputGroupAddon>
-            <InputText placeholder="Apellido" />
+            <InputText placeholder="Apellido" v-model="apellido" />
           </InputGroup>
 
-          <!-- input pequeños -->
-          <div class="card flex flex-col md:flex-row gap-3">
-
-            <InputGroup>
-              <InputGroupAddon class="bg-black text-white">
-                <Icon name="majesticons:calendar" color="white" size="22" />
-              </InputGroupAddon>
-              <Calendar dateFormat="dd/mm/yy" />
-            </InputGroup>
-
-            <InputGroup>
-              <InputGroupAddon class="bg-black text-white">
-                <Icon name="majesticons:calendar" color="white" size="22" />
-              </InputGroupAddon>
-              <Calendar dateFormat="dd/mm/yy" />
-            </InputGroup>
-
-            <InputGroup>
-              <InputGroupAddon class="bg-black text-white">
-                <Icon name="majesticons:calendar" color="white" size="22" />
-              </InputGroupAddon>
-              <Calendar dateFormat="dd/mm/yy" />
-            </InputGroup>
-          </div>
           <InputGroup>
             <InputGroupAddon class="bg-black text-white">
               <Icon name="ic:baseline-alternate-email" color="white" size="22" />
             </InputGroupAddon>
-            <InputText placeholder="correo" />
+            <InputText type="email" placeholder="correo" v-model="email" />
           </InputGroup>
+
+          <div class="card flex flex-col md:flex-row gap-3">
+            <div class="flex-auto">
+              <label for="buttondisplay" class="block mb-2"> Nacimiento </label>
+              <InputGroup>
+                <InputGroupAddon class="bg-black text-white">
+                  <Icon name="majesticons:calendar" color="white" size="22" />
+                </InputGroupAddon>
+                <Calendar dateFormat="dd/mm/yy" v-model="born" />
+              </InputGroup>
+            </div>
+          </div>
+
         </div>
       </template>
       <template #footer>
         <div class="flex justify-center align-middle gap-3 mt-1">
-          <SplitButton label="Save" :model="items" @click="save" icon="pi pi-plus" rounded severity="contrast"
+          <SplitButton label="Save" :model="BtnItems" @click="save" icon="pi pi-plus" rounded severity="contrast"
             class="text-white bg-black px-2 py-2"></SplitButton>
         </div>
       </template>

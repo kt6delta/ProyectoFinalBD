@@ -29,14 +29,12 @@ const save = () => {
 
 import { ref } from "vue";
 
-const selectedCity = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
+const selectedCargos = ref();
+let cargos = ref([await $fetch('/empleados')]);
+cargos=cargos.value[0];
+
+const search= ref();
+const value = ref();
 </script>
 
 <template>
@@ -55,14 +53,15 @@ const cities = ref([
             <InputGroupAddon class="bg-black text-white">
               <Icon name="mdi:company" color="white" size="22" />
             </InputGroupAddon>
-            <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="cargo" class="w-full md:w-[14rem]" />
+            <Dropdown v-model="selectedCargos" :options="cargos" optionLabel="name" placeholder="cargo"
+              class="w-full md:w-[14rem]" />
           </InputGroup>
 
           <InputGroup>
             <InputGroupAddon class="bg-black text-white">
               $
             </InputGroupAddon>
-              <InputNumber placeholder="Price" />
+            <InputNumber placeholder="Price" />
           </InputGroup>
 
           <InputGroup>
