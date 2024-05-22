@@ -38,7 +38,6 @@ const value = ref();
 </script>
 
 <template>
-  <LandingContainer>
     <Card class="mt-[5vh]" style="overflow: hidden">
       <template #header>
         <LandingSectionhead>
@@ -115,5 +114,4 @@ const value = ref();
       <InlineMessage severity="warn">Warning Message</InlineMessage>
       <InlineMessage severity="error">Error Message</InlineMessage>
     </div>
-  </LandingContainer>
 </template>
