@@ -1,9 +1,15 @@
 <script setup>
 import { ref } from "vue";
 import { Icon } from '#components';
+
+const props = defineProps({
+  Propempleado: String
+});
+
+let empleado = ref(props.Propempleado);
 const items = ref([
   {
-    label: 'anonimo',
+    label: empleado.value,
     root: true
   }
 ]);

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-slate-300 min-h-screen min-w-screen">
-    <LandingNavbar></LandingNavbar>
+    <!-- <LandingNavbar></LandingNavbar> -->
     <slot></slot>
     <LandingFooter></LandingFooter>
   </div>
