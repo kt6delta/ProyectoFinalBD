@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     14/05/2024 10:18:01 a. m.                    */
+/* Created on:     21/05/2024 4:21:59 p.Â m.                     */
 /*==============================================================*/
 
 
@@ -17,7 +17,7 @@ alter table CONTACTOCANDIDATO
    drop constraint FK_CONTACTO_RELATIONS_CANDIDAT;
 
 alter table CONTACTOCANDIDATO
-   drop constraint FK_CONTAC_RELATION_TIPOCONT;
+   drop constraint FK_CONTACTO_RELATIONS_TIPOCONT;
 
 alter table CONTACTOCLIENTE
    drop constraint FK_CONTACTO_RELATIONS_CLIENTE;
@@ -133,7 +133,7 @@ drop table CARGO cascade constraints;
 
 drop table CLIENTE cascade constraints;
 
-drop index RELATIONSHIP_25_FK;
+drop index RELATIONSHIP_40_FK;
 
 drop index RELATIONSHIP_24_FK;
 
@@ -169,7 +169,7 @@ drop index RELATIONSHIP_31_FK;
 
 drop table FASECARGO cascade constraints;
 
-drop index RELATIONSHIP_23_FK;
+drop index RELATIONSHIP_41_FK;
 
 drop index RELATIONSHIP_22_FK;
 
@@ -253,13 +253,9 @@ drop table TIPOCARGO cascade constraints;
 
 drop table TIPOCONTACTO cascade constraints;
 
-drop table TIPOCONTACTO2 cascade constraints;
-
 drop table TIPODOC cascade constraints;
 
 drop table TIPOITEMPERFIL cascade constraints;
-
-drop table TIPOITEMPERFIL2 cascade constraints;
 
 drop table TIPOPREGUNTA cascade constraints;
 
@@ -332,7 +328,7 @@ create table CONTACTOCANDIDATO
 (
    CONSECCONTACANDI     NUMBER(4)            not null,
    USUARIO              VARCHAR2(30)         not null,
-   IDTIPOCONTACTO2      VARCHAR2(3)          not null,
+   IDTIPOCONTACTO1      VARCHAR2(3)          not null,
    constraint PK_CONTACTOCANDIDATO primary key (CONSECCONTACANDI)
 );
 
@@ -344,10 +340,10 @@ create index RELATIONSHIP_24_FK on CONTACTOCANDIDATO (
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_25_FK                                    */
+/* Index: RELATIONSHIP_40_FK                                    */
 /*==============================================================*/
-create index RELATIONSHIP_25_FK on CONTACTOCANDIDATO (
-   IDTIPOCONTACTO2 ASC
+create index RELATIONSHIP_40_FK on CONTACTOCANDIDATO (
+   IDTIPOCONTACTO1 ASC
 );
 
 /*==============================================================*/
@@ -497,7 +493,7 @@ create table HV
    CONSECHV             NUMBER(3,0)          not null,
    USUARIO              VARCHAR2(30)         not null,
    CODINSTITUCION       NUMBER(5,0)          not null,
-   TIPOITEMPERFIL2      VARCHAR2(4)          not null,
+   IDTIPOITEMPERFIL     VARCHAR2(4)          not null,
    FECHAINICACT         DATE                 not null,
    FECHAFINACT          DATE,
    DESCACTIVIDAD        VARCHAR2(50)         not null,
@@ -520,10 +516,10 @@ create index RELATIONSHIP_22_FK on HV (
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_23_FK                                    */
+/* Index: RELATIONSHIP_41_FK                                    */
 /*==============================================================*/
-create index RELATIONSHIP_23_FK on HV (
-   TIPOITEMPERFIL2 ASC
+create index RELATIONSHIP_41_FK on HV (
+   IDTIPOITEMPERFIL ASC
 );
 
 /*==============================================================*/
@@ -894,16 +890,6 @@ create table TIPOCONTACTO
 );
 
 /*==============================================================*/
-/* Table: TIPOCONTACTO2                                         */
-/*==============================================================*/
-create table TIPOCONTACTO2 
-(
-   IDTIPOCONTACTO2      VARCHAR2(3)          not null,
-   DESCTIPOCONTACTO     VARCHAR2(20)         not null,
-   constraint PK_TIPOCONTACTO2 primary key (IDTIPOCONTACTO2)
-);
-
-/*==============================================================*/
 /* Table: TIPODOC                                               */
 /*==============================================================*/
 create table TIPODOC 
@@ -921,16 +907,6 @@ create table TIPOITEMPERFIL
    IDTIPOITEMPERFIL     VARCHAR2(4)          not null,
    DESCTIPOITEMPERFIL   VARCHAR2(30)         not null,
    constraint PK_TIPOITEMPERFIL primary key (IDTIPOITEMPERFIL)
-);
-
-/*==============================================================*/
-/* Table: TIPOITEMPERFIL2                                       */
-/*==============================================================*/
-create table TIPOITEMPERFIL2 
-(
-   TIPOITEMPERFIL2      VARCHAR2(4)          not null,
-   DESCTIPOITEMPERFIL   VARCHAR2(30)         not null,
-   constraint PK_TIPOITEMPERFIL2 primary key (TIPOITEMPERFIL2)
 );
 
 /*==============================================================*/
@@ -970,8 +946,8 @@ alter table CONTACTOCANDIDATO
       references CANDIDATO (USUARIO);
 
 alter table CONTACTOCANDIDATO
-   add constraint FK_CONTAC_RELATION_TIPOCONT foreign key (IDTIPOCONTACTO2)
-      references TIPOCONTACTO2 (IDTIPOCONTACTO2);
+   add constraint FK_CONTACTO_RELATIONS_TIPOCONT foreign key (IDTIPOCONTACTO1)
+      references TIPOCONTACTO (IDTIPOCONTACTO1);
 
 alter table CONTACTOCLIENTE
    add constraint FK_CONTACTO_RELATIONS_CLIENTE foreign key (NIT)
@@ -1014,8 +990,8 @@ alter table HV
       references INSTITUCION (CODINSTITUCION);
 
 alter table HV
-   add constraint FK_HV_RELATIONS_TIPOITEM foreign key (TIPOITEMPERFIL2)
-      references TIPOITEMPERFIL2 (TIPOITEMPERFIL2);
+   add constraint FK_HV_RELATIONS_TIPOITEM foreign key (IDTIPOITEMPERFIL)
+      references TIPOITEMPERFIL (IDTIPOITEMPERFIL);
 
 alter table ITEMPERFIL
    add constraint FK_ITEMPERF_RELATIONS_TIPOITEM foreign key (IDTIPOITEMPERFIL)

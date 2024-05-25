@@ -35,14 +35,16 @@ async function submit() {
                 "FECHANAC": born.value,
                 "CORREO": email.value,
                 "cargo": selectedCargos.value
+                
             }
         })
         if ((response as Response).status === 201) {
             create.value = true;
             message.value = "Empleado logeado correctamente";
+            const username = nombre.value;
             setTimeout(() => {
                 const router = useRouter();
-                router.push('/requerimiento');
+                router.push(`/requerimiento/${username}`);
 
             }, 3000);
         }
