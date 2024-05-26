@@ -95,29 +95,18 @@ const getOrderSeverity = (order) => {
                     </div>
                 </template>
                 <Column selectionMode="multiple" headerStyle="width: 3rem" class="bg-slate-200"></Column>
-                <Column field="envio" header="Envio"></Column>
+                <Column field="correo" header="Correo"></Column>
                 <Column expander style="width: 5rem" />
-                <Column field="name" header="Name"></Column>
-                <Column header="Image">
+                <Column field="nombre" header="Nombre"></Column>
+                <Column header="Disciplina">
                     <template #body="slotProps">
                         <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
                             :alt="slotProps.data.image" class="shadow-lg" width="64" />
                     </template>
                 </Column>
-                <Column field="price" header="Price">
+                <Column field="tipoItemPerfil" header="tipoItemPerfil">
                     <template #body="slotProps">
                         {{ formatCurrency(slotProps.data.price) }}
-                    </template>
-                </Column>
-                <Column field="category" header="Category"></Column>
-                <Column field="rating" header="Reviews">
-                    <template #body="slotProps">
-                        <Rating :modelValue="slotProps.data.rating" readonly :cancel="false" />
-                    </template>
-                </Column>
-                <Column header="Status">
-                    <template #body="slotProps">
-                        <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data)" />
                     </template>
                 </Column>
                 <template #expansion="slotProps">
