@@ -1,6 +1,4 @@
-
-
-  import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
+import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
 
 export default defineEventHandler(async (event) => {
   try {

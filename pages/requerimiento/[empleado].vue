@@ -9,20 +9,54 @@ const toast = useToast();
 let cod = ref(null);
 let salarioMax = ref("");
 let salarioMin = ref("");
-let numeroVacantes= ref("");
+let nVacantes= ref("");
 let descfuncion = ref("");
 let descCarreras = ref("");
-
+let FechaReque = ref(null);
+let consecReque = ref(null);
 
 
 const save = () => {
-  toast.add({ severity: 'success', summary: 'Success', detail: 'Data Saved', life: 3000 });
+  submit();
 };
 
-import { ref } from "vue";
 
-let cargos = ref([await $fetch('/cargos')]);
-cargos=cargos.value[0];
+
+let message = ref("");
+let create = ref(false);
+let alredyCreate = ref(false);
+let isIncomplete = ref(false);
+
+async function submit() {
+  const CODEMPLEADO = localStorage.getItem('CODEMPLEADO');
+  try {
+    if ( !salarioMax.value || !salarioMin.value || !FechaReque.value || !descfuncion.value || !descCarreras.value || !nVacantes.value) {
+      message.value = "Faltan datos";
+      isIncomplete.value = true;
+      return;
+    }
+    const route = useRoute();
+    await $fetch('/requerimientos/' + route.params.empleado, {
+      method: 'POST',
+      body: {
+        "FECHAREQUE": FechaReque.value,
+        "SALARIOMAX": salarioMax.value,
+        "SALARIOMIN": salarioMin.value,
+        "DESCFUNCION": descfuncion.value,
+        "DESCCARRERAS":descCarreras.value,
+        "NVACANTES": nVacantes.value
+      }
+    })
+    message.value = "requerimiento creado";
+    create.value = true;
+  } 
+  
+  catch (error) {
+    console.error('Error during fetch:', error);
+    message.value = "Ya existe un requerimiento";
+    alredyCreate.value = true;
+  }
+}
 
 </script>
 
@@ -48,7 +82,7 @@ cargos=cargos.value[0];
           <InputGroupAddon class="bg-black text-white">
             <Icon name="material-symbols:person-outline" color="white" size="22" />
           </InputGroupAddon>
-          <InputText type="numer" placeholder="SalarioMax" v-model="salarioMax" />
+          <InputText type="number" placeholder="SalarioMax" v-model="salarioMax" />
         </InputGroup>
 
         <InputGroup>
@@ -76,21 +110,21 @@ cargos=cargos.value[0];
           <InputGroupAddon class="bg-black text-white">
             <Icon name="material-symbols:person-outline" color="white" size="22" />
           </InputGroupAddon>
-          <InputText type="number" :min="1" placeholder="numeroVacantes" v-model ="numeroVacantes"/>
+          <InputText type="number" :min="1" placeholder="nVacantes" v-model ="nVacantes"/>
         </InputGroup>
 
-          <!-- input pequeños -->
-          <div class="card flex flex-col md:flex-row gap-3">
+        <div class="card flex flex-col md:flex-row gap-3">
+          <InputGroup>
+            <InputGroupAddon class="bg-black text-white">
+              <Icon name="majesticons:calendar" color="white" size="22" />
+            </InputGroupAddon>
+            <FloatLabel>
+              <label for="label-nacimiento">FechaCreacion </label>
+              <Calendar dateFormat="dd/mm/yy" v-model="FechaReque" />
+            </FloatLabel>
+          </InputGroup>
+        </div>
 
-            <InputGroup>
-              <InputGroupAddon class="bg-black text-white">
-                <Icon name="majesticons:calendar" color="white" size="22" />
-              </InputGroupAddon>
-              <Calendar dateFormat="dd/mm/yy" />
-              <InputText placeholder="FechaCreacion" />
-            </InputGroup>
-
-          </div>
 
         </div>
       </template>
@@ -102,8 +136,8 @@ cargos=cargos.value[0];
       </template>
     </Card>
     <div class="card flex flex-wrap items-center justify-center gap-3 mt-16">
-      <InlineMessage severity="success">Success Message</InlineMessage>
-      <InlineMessage severity="warn">Warning Message</InlineMessage>
-      <InlineMessage severity="error">Error Message</InlineMessage>
+    <InlineMessage v-if="isIncomplete" severity="error">{{ message }}</InlineMessage>
+    <InlineMessage v-else-if="alredyCreate" severity="warn">{{ message }}</InlineMessage>
+    <InlineMessage v-else-if="create" severity="success">{{ message }}</InlineMessage>
     </div>
 </template>

@@ -4,6 +4,25 @@ definePageMeta({
 });
 import { ref } from "vue";
 
+
+async function generateEmployeeCode() {
+  try {
+    const response = await fetch('/generate-code', {
+      method: 'GET'
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.setItem('CODEMPLEADO', result.CODEMPLEADO);
+      console.log('Código de empleado generado:', result.CODEMPLEADO);
+    } else {
+      console.error('Error al generar el código de empleado:', result.error);
+    }
+  } catch (error) {
+    console.error('Error en la conexión:', error);
+  }
+} 
+
 const BtnItems = [
   {
     label: 'Update',
@@ -46,7 +65,7 @@ async function submit() {
         "APELLEMPLEADO": apellido.value,
         "FECHANAC": born.value,
         "CORREO": email.value,
-        "CARGO": selectedCargos.value
+        "cargo": selectedCargos.value
       }
     })
     message.value = "Empleado creado";

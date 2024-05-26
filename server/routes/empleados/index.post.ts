@@ -59,3 +59,25 @@ function Repeticion(Object: any, body: any) {
   }
   return false;
 }
+
+export async function obtenerCodigoEmpleado(nombre: string ): Promise<string | null> {
+  let connection;
+  try {
+    connection = await abrirConexion();
+    const result = await connection.execute(
+      `SELECT CODEMPLEADO FROM Empleado WHERE NOMEMPLEADO = :nombre `,
+      [nombre]
+    );
+
+    if (result.rows.length > 0) {
+      return result.rows[0][0]; // Asumiendo que el CODEMPLEADO está en la primera columna
+    } else {
+      return null; // No se encontró el empleado
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    await cerrarConexion(connection);
+  }
+}
