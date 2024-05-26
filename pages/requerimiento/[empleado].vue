@@ -21,12 +21,9 @@ const save = () => {
 
 import { ref } from "vue";
 
-const selectedCargos = ref();
 let cargos = ref([await $fetch('/cargos')]);
 cargos=cargos.value[0];
 
-const search= ref();
-const value = ref();
 </script>
 
 <template>

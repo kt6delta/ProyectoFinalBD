@@ -4,7 +4,7 @@ import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const res = event.res as ServerResponse;
-  if (!body.NOMEMPLEADO || !body.APELLEMPLEADO || !body.FECHANAC || !body.CORREO || !body.cargo) { //compueba si alguno de los campos de la petición estan vacios
+  if (!body.NOMEMPLEADO || !body.APELLEMPLEADO || !body.FECHANAC || !body.CORREO || !body.CARGO) { //compueba si alguno de los campos de la petición estan vacios
     res.writeHead(400, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({status: 400, error: 'información faltante' }));
     return;
@@ -19,8 +19,15 @@ export default defineEventHandler(async (event) => {
     let CODEMPLEADO = await connection.execute(`SELECT CODEMPLEADO FROM Empleado where NOMEMPLEADO = '${body.NOMEMPLEADO}' and APELLEMPLEADO = '${body.APELLEMPLEADO}' and FECHANAC = TO_DATE('${FECHANAC}','DD-MM-YYYY') and CORREO = '${body.CORREO}'`);
     if (CODEMPLEADO.rows.length > 0) {
       CODEMPLEADO = CODEMPLEADO.rows[0][0];
-      result = await connection.execute(`UPDATE empleado SET FECHAINGRE = TO_DATE('${FECHAINGRE}','DD-MM-YYYY') WHERE CODEMPLEADO = '${CODEMPLEADO}'`);
-      await connection.execute(`commit`)
+      let IDTIPOCARGO = await connection.execute(`SELECT IDTIPOCARGO FROM CARGO WHERE CODEMPLEADO = '${CODEMPLEADO}'`);
+      if(IDTIPOCARGO.rows.length > 0){
+        IDTIPOCARGO = IDTIPOCARGO.rows[0][0];
+        result = await connection.execute(`UPDATE empleado SET FECHAINGRE = TO_DATE('${FECHAINGRE}','DD-MM-YYYY') WHERE CODEMPLEADO = '${CODEMPLEADO}'`);
+        await connection.execute(`commit`)
+      }else{
+        res.end(JSON.stringify({status: 405, error: 'Cargo no Adecuado' }));
+        return;
+      }
     }else{
       res.end(JSON.stringify({status: 404, error: 'Empleado no encontrado' }));
       return;

@@ -4,7 +4,7 @@ import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const res = event.res as ServerResponse;
-  if (!body.NOMEMPLEADO || !body.APELLEMPLEADO || !body.FECHANAC || !body.CORREO || !body.cargo) { //compueba si alguno de los campos de la petición estan vacios
+  if (!body.NOMEMPLEADO || !body.APELLEMPLEADO || !body.FECHANAC || !body.CORREO || !body.CARGO) { //compueba si alguno de los campos de la petición estan vacios
     res.writeHead(400, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'información faltante' }));
     return;
@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
   FECHANAC = `${FECHANAC.getDate().toString().padStart(2, '0')}-${(FECHANAC.getMonth() + 1).toString().padStart(2, '0')}-${FECHANAC.getFullYear()}`;
   let FECHAINGRE = `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`;
   let FECHAEGRESO = body.FECHAEGRESO || "";
+  let FECHAFINCARGO = body.FECHAFINCARGO || "";
   let connection;
   try {
     connection = await abrirConexion();
@@ -25,6 +26,9 @@ export default defineEventHandler(async (event) => {
       return;
     }
     result = await connection.execute(`insert into empleado values ('${CODEMPLEADO}','${body.NOMEMPLEADO}','${body.APELLEMPLEADO}',TO_DATE('${FECHANAC}','DD-MM-YYYY'),TO_DATE('${FECHAINGRE}','DD-MM-YYYY'),TO_DATE('${FECHAEGRESO}','DD-MM-YYYY'),'${body.CORREO}')`)
+    result = await connection.execute(`SELECT * FROM CARGO`);
+    let CONSECCARGO = result.rows.length + 1;
+    result = await connection.execute(`insert into CARGO values ('${CONSECCARGO}','${body.CARGO.code}','${CODEMPLEADO}',TO_DATE('${FECHAINGRE}','DD-MM-YYYY'),TO_DATE('${FECHAFINCARGO}','DD-MM-YYYY'),'${body.CARGO.name}')`)
     await connection.execute(`commit`)
   } catch (err) {
     console.log(err)

@@ -34,8 +34,7 @@ async function submit() {
                 "APELLEMPLEADO": apellido.value,
                 "FECHANAC": born.value,
                 "CORREO": email.value,
-                "cargo": selectedCargos.value
-                
+                "CARGO": selectedCargos.value
             }
         })
         if ((response as Response).status === 201) {
@@ -44,13 +43,21 @@ async function submit() {
             const username = nombre.value;
             setTimeout(() => {
                 const router = useRouter();
-                router.push(`/requerimiento/${username}`);
-
-            }, 3000);
+                if (selectedCargos.value.code == 2) {
+                    router.push(`/TablaRequerimientos/${username}`);
+                }
+                if (selectedCargos.value.code == 1) {
+                    router.push(`/requerimiento/${username}`);
+                }
+            }, 1000);
         }
         if ((response as Response).status === 404) {
             alredyCreate.value = true;
             message.value = "No existe el empleado";
+        }
+        if ((response as Response).status === 405) {
+            alredyCreate.value = true;
+            message.value = "Cargo no Adecuado";
         }
     } catch (error) {
         console.error('Error during fetch:', error);

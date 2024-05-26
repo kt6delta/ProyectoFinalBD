@@ -46,7 +46,7 @@ async function submit() {
         "APELLEMPLEADO": apellido.value,
         "FECHANAC": born.value,
         "CORREO": email.value,
-        "cargo": selectedCargos.value
+        "CARGO": selectedCargos.value
       }
     })
     message.value = "Empleado creado";
