@@ -49,7 +49,7 @@ async function submit() {
                 if (selectedCargos.value.code == 1) {
                     router.push(`/requerimiento/${username}`);
                 }
-            }, 1000);
+            }, 2000);
         }
         if ((response as Response).status === 404) {
             alredyCreate.value = true;

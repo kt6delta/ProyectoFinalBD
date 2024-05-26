@@ -13,6 +13,8 @@ export default defineEventHandler(async (event) => {
     let connection;
     try {
         connection = await abrirConexion();
+        await connection.execute(`DELETE FROM cargo WHERE CODEMPLEADO = '${body.CODEMPLEADO}'`);
+        await connection.execute(`DELETE FROM requerimiento WHERE CODEMPLEADO = '${body.CODEMPLEADO}'`);
         result = await connection.execute(`DELETE FROM empleado WHERE CODEMPLEADO = '${body.CODEMPLEADO}'`);
         await connection.execute(`commit`)
     } catch (err) {

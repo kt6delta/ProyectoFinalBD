@@ -130,8 +130,8 @@ async function submit() {
       </template>
       <template #footer>
         <div class="flex justify-center align-middle gap-3 mt-1">
-          <SplitButton label="Save" @click="save" rounded severity="contrast"
-            class="text-white bg-black px-2 py-2"></SplitButton>
+          <Button label="Save" @click="save" rounded severity="contrast" icon="pi pi-check" iconPos="right"
+            class="text-white bg-black px-2 py-2"></Button>
         </div>
       </template>
     </Card>
