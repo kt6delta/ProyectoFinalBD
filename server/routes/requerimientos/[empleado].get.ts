@@ -5,7 +5,10 @@
 export default defineEventHandler(async (event) => {
   try {
     const connection = await abrirConexion();
-    let result = await connection.execute(`SELECT * FROM requerimiento`)
+    let NameEmpleado= event?.context?.params?.empleado || '';
+    let result=await connection.execute(`SELECT CODEMPLEADO FROM empleado WHERE NOMEMPLEADO = '${NameEmpleado}'`);
+    let CodEmpleado = result.rows;
+    result = await connection.execute(`SELECT * FROM requerimiento WHERE CODEMPLEADO = ${CodEmpleado}`);
     await cerrarConexion(connection);
     result = result.rows;
     return result;

@@ -7,6 +7,7 @@ import { ref, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { ProductService } from '@/service/ProductService';
 
+const currentDate = new Date().toLocaleDateString();
 const products = ref();
 const expandedRows = ref([]);
 const toast = useToast();
@@ -16,10 +17,10 @@ onMounted(() => {
 });
 
 const onRowExpand = (event) => {
-    toast.add({ severity: 'info', summary: 'Product Expanded', detail: event.data.name, life: 3000 });
+    toast.add({ severity: 'info', summary: 'Requerimiento Expandido', detail: event.data.name, life: 3000 });
 };
 const onRowCollapse = (event) => {
-    toast.add({ severity: 'success', summary: 'Product Collapsed', detail: event.data.name, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Requerimiento Contraido', detail: event.data.name, life: 3000 });
 };
 const expandAll = () => {
     expandedRows.value = products.value.reduce((acc, p) => (acc[p.id] = true) && acc, {});
@@ -45,33 +46,22 @@ const getSeverity = (product) => {
             return null;
     }
 };
-const getOrderSeverity = (order) => {
-    switch (order.status) {
-        case 'DELIVERED':
-            return 'success';
 
-        case 'CANCELLED':
-            return 'danger';
-
-        case 'PENDING':
-            return 'warning';
-
-        case 'RETURNED':
-            return 'info';
-
-        default:
-            return null;
-    }
-};
+let CodRequerimiento = 0;
+function Candidatos() {
+    const router = useRouter();
+    const route = useRoute();
+    router.push(`/TablaCandidatos/${route.params.empleado}/${CodRequerimiento}`);
+}
 
 </script>
 
 <template>
     <LandingSectionhead>
         <template v-slot:title>Requerimientos Pendientes</template>
-        <template v-slot:desc>FECHA: Se muestra solo para Analista General.</template>
+        <template v-slot:desc>FECHA: {{ currentDate }}</template>
     </LandingSectionhead>
-    
+
     <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-12">
         <div class="card">
             <DataTable v-model:expandedRows="expandedRows" :value="products" dataKey="id" @rowExpand="onRowExpand"
@@ -83,45 +73,62 @@ const getOrderSeverity = (order) => {
                     </div>
                 </template>
                 <Column expander style="width: 5rem" />
-                <Column field="name" header="Consec"></Column>
-                <Column header="CodEmple">
+                <Column field="Consec" header="Consec">
+                    <template #body="slotProps">
+                        123
+                    </template>
+                </Column>
+                <Column header="Perfil">
                     <template #body="slotProps">
                         <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
                             :alt="slotProps.data.image" class="shadow-lg" width="64" />
                     </template>
                 </Column>
-                <Column field="price" header="CodEmple">
+                <Column field="diciplina" header="Diciplina">
                     <template #body="slotProps">
                         {{ formatCurrency(slotProps.data.price) }}
                     </template>
                 </Column>
-                <Column field="category" header="Fecha"></Column>
-                <Column field="rating" header="salarioMax">
+                <Column field="faseFaltante" header="FasesFaltantes">
                     <template #body="slotProps">
                         <Rating :modelValue="slotProps.data.rating" readonly :cancel="false" />
                     </template>
                 </Column>
-                <Column header="SalarioMin">
+                <Column field="faseActual" header="FaseActual">
                     <template #body="slotProps">
                         <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data)" />
                     </template>
                 </Column>
-                <Column field="fecha" header="DescFuncion"></Column>
-                <Column field="fecha" header="DesCarreras"></Column>
-                <Column field="fecha" header="#Vacantes"></Column>
                 <template #expansion="slotProps">
                     <div class="p-3">
-                        <h>Componente para editar Requerimiento</h>
+                        <h>Componente para editar TABLA Requerimiento
+                            CONSECREQUE
+                            FECHAREQUE
+                            SALARIOMAX
+                            SALARIOMIN
+                            DESCFUNCION
+                            DESCCARRERAS
+                            NVACANTES
+                        </h>
                         <Icon name="bxs:pencil" size="25" />
                     </div>
                     <div class="p-3">
-                        <h>Componente para editar Convocatoria (correo)</h>
+                        <h>Componente para editar TABLA procesorequerimiento
+                            IDPERFIL ->perfil
+                            IDFASE ->fase
+                            CONSECREQUE
+                            CONSEPROCESO
+                            FECHAINICIO
+                            FECHAFIN
+                            CONVOCATORIA
+                            INVITACION (correo)
+                        </h>
                         <Icon name="bxs:pencil" size="25" />
                     </div>
                     <div class="p-3">
-                <Button label="Candidatos" severity="success"
-                    class="text-white bg-primary p-1" @click="$router.push('/TablaCandidatos/lau')"></Button>
-            </div>
+                        <Button label="Candidatos" severity="success" class="text-white bg-primary p-1"
+                            @click="Candidatos"></Button>
+                    </div>
                 </template>
             </DataTable>
             <Toast />
