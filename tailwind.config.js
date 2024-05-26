@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        
+        primary: '#10b981',
       }
     },
     fontFamily: {

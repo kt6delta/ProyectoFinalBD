@@ -74,12 +74,17 @@ const getOrderSeverity = (order) => {
 
     <LandingSectionhead>
         <template v-slot:title>Candidatos que cumplen Requerimientos</template>
-        <template v-slot:desc>FECHA Se muestra solo n Requerimiento esta lista de candidatos y quiero una tabla
-            desplegable que dentro
-            contenga un componente de hojas de vida.</template>
+        <template v-slot:desc>FECHA:</template>
     </LandingSectionhead>
 
-    <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-12">
+    <div class="flex justify-center align-middle gap-3 mt-5">
+            <Button label="Enviar" rounded severity="contrast"
+                class="text-white bg-black px-2 py-2"></Button>
+            <Button label="Preselecion" rounded severity="contrast" @click="$router.push('/TablaPreseleccion/lau')"
+                class="text-white bg-black px-2 py-2"></Button>
+        </div>
+
+    <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-5">
         <div class="card">
             <DataTable v-model:selection="selectedProduct" v-model:expandedRows="expandedRows" :value="products"
                 dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" tableStyle="min-width: 60rem">

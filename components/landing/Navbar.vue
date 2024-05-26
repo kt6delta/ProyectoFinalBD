@@ -1,18 +1,34 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute } from 'vue-router';
 import { Icon } from '#components';
 
+const route = useRoute();
 const props = defineProps({
   Propempleado: String
 });
 
-let empleado = ref(props.Propempleado);
+let empleado = ref(route.params.empleado || props.Propempleado);
 const items = ref([
   {
     label: empleado.value,
     root: true
   }
 ]);
+
+watch(() => props.Propempleado, (newEmpleado) => {
+  if (newEmpleado) {
+    empleado.value = newEmpleado;
+    items.value[0].label = newEmpleado;
+  }
+});
+
+watch(() => route.params.empleado, (newEmpleado) => {
+  if (newEmpleado) {
+    empleado.value = newEmpleado;
+    items.value[0].label = newEmpleado;
+  }
+});
 </script>
 
 <template>
