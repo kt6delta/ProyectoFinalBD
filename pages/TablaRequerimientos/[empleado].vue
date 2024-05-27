@@ -3,86 +3,72 @@ definePageMeta({
     layout: "landing",
 });
 import InputsRequerimiento from '@/components/InputsRequerimiento.vue';
-let cod = ref(null)
-let salarioMax = ref("")
-let salarioMin = ref("")
-let nVacantes = ref("")
-let descfuncion = ref("")
-let descCarreras = ref("")
-let FechaReque = ref(null)
-const updateCod = (newVal) => {
-    cod.value = newVal
+let disable = ref(true)
+function EditRequerimiento() {
+    disable.value = !disable.value
 }
-const updateSalarioMax = (newVal) => {
-    salarioMax.value = newVal
+const router = useRouter();
+const route = useRoute();
+let CodRequerimiento = 0;
+function Candidatos() {
+    router.push(`/TablaCandidatos/${route.params.empleado}/${CodRequerimiento}`);
 }
-const updateNVacantes = (newVal) => {
-    nVacantes.value = newVal
-}
-const updateDescfuncion = (newVal) => {
-    descfuncion.value = newVal
-}
-const updateDescCarreras = (newVal) => {
-    descCarreras.value = newVal
-}
-const updateFechaReque = (newVal) => {
-    FechaReque.value = newVal
-}
-const updateSalarioMin = (newVal) => {
-    salarioMin.value = newVal
-}
+const currentDate = new Date().toLocaleDateString();
 
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 
-import { ProductService } from '@/service/ProductService';
+const requerimiento = ref();
 
-const currentDate = new Date().toLocaleDateString();
-const products = ref();
+onMounted(async () => {
+    requerimiento.value = await $fetch(`/requerimientos/${route.params.empleado}`);
+    console.log(requerimiento.value);
+    //adiciona diciplina y perfil
+});
+
 const expandedRows = ref([]);
 const toast = useToast();
 
-onMounted(() => {
-    ProductService.getProductsWithOrdersSmall().then((data) => (products.value = data));
-});
-
 const onRowExpand = (event) => {
-    toast.add({ severity: 'info', summary: 'Requerimiento Expandido', detail: event.data.name, life: 3000 });
+    toast.add({ severity: 'info', summary: 'Requerimiento Expandido', detail: event.data.CONSECREQUE, life: 3000 });
 };
 const onRowCollapse = (event) => {
-    toast.add({ severity: 'success', summary: 'Requerimiento Contraido', detail: event.data.name, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Requerimiento Contraido', detail: event.data.CONSECREQUE, life: 3000 });
 };
 const expandAll = () => {
-    expandedRows.value = products.value.reduce((acc, p) => (acc[p.id] = true) && acc, {});
+    expandedRows.value = requerimiento.value.reduce((acc, p) => (acc[p.CONSECREQUE] = true) && acc, {});
 };
 const collapseAll = () => {
     expandedRows.value = null;
 };
-const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
-const getSeverity = (product) => {
-    switch (product.inventoryStatus) {
-        case 'INSTOCK':
+
+const getSeverity = (fase) => {
+    switch (fase) {
+        case 'Registrar Requerimiento':
+            return 'Primary';
+
+        case 'Asignar Perfil':
+            return 'secondary';
+
+        case 'Publicar Convocatoria':
             return 'success';
 
-        case 'LOWSTOCK':
+        case 'Mandar Invitación':
+            return 'info';
+
+        case 'Preselección':
             return 'warning';
 
-        case 'OUTOFSTOCK':
+        case 'Realizar Prueba':
             return 'danger';
+
+        case 'Entrevista':
+            return 'contrast';
 
         default:
             return null;
     }
 };
-
-let CodRequerimiento = 0;
-function Candidatos() {
-    const router = useRouter();
-    const route = useRoute();
-    router.push(`/TablaCandidatos/${route.params.empleado}/${CodRequerimiento}`);
-}
 
 </script>
 
@@ -94,8 +80,10 @@ function Candidatos() {
 
     <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-12">
         <div class="card">
-            <DataTable v-model:expandedRows="expandedRows" :value="products" dataKey="id" @rowExpand="onRowExpand"
+
+            <DataTable v-model:expandedRows="expandedRows" :value="requerimiento" dataKey="id" @rowExpand="onRowExpand"
                 @rowCollapse="onRowCollapse" tableStyle="min-width: 60rem">
+
                 <template #header>
                     <div class="flex flex-wrap justify-end gap-2">
                         <Button text icon="pi pi-plus" label="Expand All" @click="expandAll" />
@@ -105,40 +93,39 @@ function Candidatos() {
                 <Column expander style="width: 5rem" />
                 <Column field="Consec" header="Consec">
                     <template #body="slotProps">
-                        123
+                       <p>{{ slotProps.data.CONSECREQUE }}</p>
                     </template>
                 </Column>
                 <Column header="Perfil">
                     <template #body="slotProps">
-                        <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
-                            :alt="slotProps.data.image" class="shadow-lg" width="64" />
+                        <p>{{ slotProps.data.perfil.DESCPERFIL }}</p>
                     </template>
                 </Column>
                 <Column field="diciplina" header="Diciplina">
                     <template #body="slotProps">
-                        {{ formatCurrency(slotProps.data.price) }}
+                        {{ slotProps.data.disciplina.DESCDISCIPLINA }}
                     </template>
                 </Column>
                 <Column field="faseFaltante" header="FasesFaltantes">
                     <template #body="slotProps">
-                        <Rating :modelValue="slotProps.data.rating" readonly :cancel="false" />
+                        <Rating :modelValue="slotProps.data.fase.DESCFASE" readonly :cancel="false" />
                     </template>
                 </Column>
                 <Column field="faseActual" header="FaseActual">
                     <template #body="slotProps">
-                        <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data)" />
+                        <Tag :value="slotProps.data.fase.DESCFASE" :severity="getSeverity(slotProps.data.fase.DESCFASE)" />
                     </template>
                 </Column>
                 <template #expansion="slotProps">
-                    <InputsRequerimiento @update:cod="updateCod" @update:salarioMax="updateSalarioMax"
-                        @update:salarioMin="updateSalarioMin" @update:nVacantes="updateNVacantes"
-                        @update:descfuncion="updateDescfuncion" @update:descCarreras="updateDescCarreras"
-                        @update:FechaReque="updateFechaReque" />
+                    <InputsRequerimiento :PropisDisable="disable" :PropCod=slotProps.data.CONSECREQUE :PropSalarioMax="slotProps.data.SALARIOMAX" :PropSalarioMin="slotProps.data.SALARIOMIN"
+                        :PropNVacantes="slotProps.data.NVACANTES" :PropDescfuncion="slotProps.data.DESCFUNCION" :PropDescCarreras="slotProps.data.DESCCARRERAS" :PropFechaReque="slotProps.data.FECHAREQUE" />
                     <div class="flex justify-end mr-5">
-                        <Icon name="bxs:pencil" size="25" />
+                        <Button aria-label="Submit" @click="EditRequerimiento">
+                            <Icon name="bxs:pencil" size="25" />
+                        </Button>
                     </div>
                     <div class="p-3">
-                        <h>Componente para editar TABLA procesorequerimiento
+                        <h1>Componente para editar TABLA procesorequerimiento
                             IDPERFIL ->perfil
                             IDFASE ->fase
                             CONSECREQUE
@@ -147,12 +134,12 @@ function Candidatos() {
                             FECHAFIN
                             CONVOCATORIA
                             INVITACION (correo)
-                        </h>
+                        </h1>
                         <Icon name="bxs:pencil" size="25" />
                     </div>
                     <div class="p-3">
                         <Button label="Candidatos" severity="success" class="text-white bg-primary p-1"
-                            @click="Candidatos"></Button>
+                            @click="Candidatos" />
                     </div>
                 </template>
             </DataTable>

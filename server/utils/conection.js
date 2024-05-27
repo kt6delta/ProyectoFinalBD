@@ -1,5 +1,10 @@
 import oracledb from 'oracledb';
+
 oracledb.initOracleClient({ libDir: `${process.env.ORACLE_CLIENT}` })
+import dotenv from 'dotenv';
+dotenv.config();
+oracledb.initOracleClient({ libDir: process.env.ORACLE_CLIENT })
+
 
 export async function abrirConexion() {
   try {
