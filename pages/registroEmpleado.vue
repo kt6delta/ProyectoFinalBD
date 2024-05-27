@@ -136,7 +136,6 @@ async function Delete() {
 const selectedCargos = ref();
 let cargos = ref([await $fetch('/cargos')]);
 cargos = cargos.value[0];
-
 let nombre = ref("");
 let apellido = ref("");
 let born = ref(null);
