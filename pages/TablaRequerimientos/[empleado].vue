@@ -21,7 +21,8 @@ import { useToast } from 'primevue/usetoast';
 const requerimiento = ref();
 
 onMounted(async () => {
-    products.value = await $fetch(`/requerimientos/${route.params.empleado}`);
+    requerimiento.value = await $fetch(`/requerimientos/${route.params.empleado}`);
+    console.log(requerimiento.value);
     //adiciona diciplina y perfil
 });
 
