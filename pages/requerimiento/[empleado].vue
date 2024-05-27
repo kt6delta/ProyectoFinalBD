@@ -14,7 +14,7 @@ let descfuncion = ref("");
 let descCarreras = ref("");
 let FechaReque = ref(null);
 let consecReque = ref(null);
-
+const currentDate = new Date().toLocaleDateString();
 
 const save = () => {
   submit();
@@ -65,7 +65,7 @@ async function submit() {
       <template #header>
         <LandingSectionhead>
           <template v-slot:title>Crear Requerimiento</template>
-          <template v-slot:desc>We find the best people.<br> fecha:</template>
+          <template v-slot:desc>We find the best people.<br> fecha: {{ currentDate }}</template>
         </LandingSectionhead>
       </template>
       <template #content>
@@ -73,35 +73,35 @@ async function submit() {
           <!-- input General -->
           <InputGroup>
           <InputGroupAddon class="bg-black text-white">
-            <Icon name="material-symbols:person-outline" color="white" size="22" />
+            <Icon name="material-symbols:step" color="white" size="22" />
           </InputGroupAddon>
           <InputText type="number" :min="0" placeholder="ConsecReque" v-model="cod" />
         </InputGroup>
 
           <InputGroup>
           <InputGroupAddon class="bg-black text-white">
-            <Icon name="material-symbols:person-outline" color="white" size="22" />
+            <Icon name="material-symbols:paid" color="white" size="22" />
           </InputGroupAddon>
           <InputText type="number" placeholder="SalarioMax" v-model="salarioMax" />
         </InputGroup>
 
         <InputGroup>
           <InputGroupAddon class="bg-black text-white">
-            <Icon name="material-symbols:person-outline" color="white" size="22" />
+            <Icon name="material-symbols:paid" color="white" size="22" />
           </InputGroupAddon>
           <InputText type="number" placeholder="SalarioMin" v-model="salarioMin"/>
         </InputGroup>
 
         <InputGroup>
           <InputGroupAddon class="bg-black text-white">
-            <Icon name="material-symbols:person-outline" color="white" size="22" />
+            <Icon name="material-symbols:prescriptions" color="white" size="22" />
           </InputGroupAddon>
           <InputText type="text" placeholder="DescFuncion" v-model="descfuncion" @input="descfuncion = descfuncion.toLowerCase()" />
         </InputGroup>
 
         <InputGroup>
           <InputGroupAddon class="bg-black text-white">
-            <Icon name="material-symbols:person-outline" color="white" size="22" />
+            <Icon name="material-symbols:prescriptions" color="white" size="22" />
           </InputGroupAddon>
           <InputText type="text" placeholder="DescCarreras" v-model="descCarreras" @input="descCarreras = descCarreras.toLowerCase()" />
         </InputGroup>

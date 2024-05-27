@@ -1,88 +1,160 @@
-INSERT ALL
-  INTO fase (idfase, descfase) VALUES ('1', 'Registrar Requerimiento')
-  INTO fase (idfase, descfase) VALUES ('2', 'Asignar Perfil')
-  INTO fase (idfase, descfase) VALUES ('3', 'Publicar Convocatoria')
-  INTO fase (idfase, descfase) VALUES ('4', 'Mandar Invitación')
-  INTO fase (idfase, descfase) VALUES ('5', 'Preselección')
-  INTO fase (idfase, descfase) VALUES ('6', 'Realizar Prueba')
-  INTO fase (idfase, descfase) VALUES ('7', 'Entrevista')
-  INTO fase (idfase, descfase) VALUES ('8', 'Fase Final')
 
-    INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('1', 'Analista Cliente')
-    INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('2', 'Analista General')
-    INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('3', 'Analista Sicológico')
-    INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('4', 'Analista Conocimient')
-    INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('5', 'Analista Tecnológic')
 
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('1', 'Estudios Técnicos')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('2', 'Estudios Tecnológico')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('3', 'Estudios Pregrado')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('4', 'Estudios Postgrados')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('5', 'Estudios Doctorales')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('6', 'Estudios No Formales')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('7', 'Prácticas Empresariales')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('8', 'Idiomas')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('9', 'Voluntariado')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('10', 'Empleado')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('11', 'Contratista')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('12', 'Publicación No indexada')
-    INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('13', 'Publicación Indexada')
+INSERT INTO fase (idfase, descfase) VALUES ('1', 'Registrar Requerimiento');
+INSERT INTO fase (idfase, descfase) VALUES ('2', 'Asignar Perfil');
+INSERT INTO fase (idfase, descfase) VALUES ('3', 'Publicar Convocatoria');
+INSERT INTO fase (idfase, descfase) VALUES ('4', 'Mandar Invitación');
+INSERT INTO fase (idfase, descfase) VALUES ('5', 'Preselección');
+INSERT INTO fase (idfase, descfase) VALUES ('6', 'Realizar Prueba');
+INSERT INTO fase (idfase, descfase) VALUES ('7', 'Entrevista');
+INSERT INTO fase (idfase, descfase) VALUES ('8', 'Fase Final');
 
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('DIR', 'Dirección')
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('OFI', 'Dirección Oficina')
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('TEL', 'Teléfono Fijo')
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('TEO', 'Teléfono Oficina')
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('CEL', 'Celular')
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('LIK', 'Linkedin')
-    INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('WHA', 'WhatsApp')
+INSERT INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('1', 'Analista Cliente');
+INSERT INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('2', 'Analista General');
+INSERT INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('3', 'Analista Sicológico');
+INSERT INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('4', 'Analista Conocimient');
+INSERT INTO TipoCargo (idtipocargo, desctipocargo) VALUES ('5', 'Analista Tecnológic');
 
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('1', 'Computación')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('2', 'Administración')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('3', 'Química')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('4', 'Biología')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('5', 'Odontología')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('6', 'Medicina')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('7', 'Sociología')
-    INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('8', 'Medicina')
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('1', 'Estudios Técnicos');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('2', 'Estudios Tecnológico');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('3', 'Estudios Pregrado');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('4', 'Estudios Postgrados');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('5', 'Estudios Doctorales');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('6', 'Estudios No Formales');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('7', 'Prácticas Empresariales');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('8', 'Idiomas');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('9', 'Voluntariado');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('10', 'Empleado');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('11', 'Contratista');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('12', 'Publicación No indexada');
+INSERT INTO tipoitemperfil (IDTIPOITEMPERFIL, DESCTIPOITEMPERFIL) VALUES ('13', 'Publicación Indexada');
 
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('1', 'Prueba Conocimiento I')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('2', 'Prueba Conocimiento II')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('3', 'Prueba Especializada')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('4', 'Prueba Sicológica')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('5', 'Prueba Grupal')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('6', 'Prueba Tecnológica I')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('7', 'Prueba Tecnológica II')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('8', 'Prueba Tecnológica Especializ')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('9', 'Prueba Ingles')
-    INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('10', 'Prueba Seguridad')
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('DIR', 'Dirección');
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('OFI', 'Dirección Oficina');
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('TEL', 'Teléfono Fijo');
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('TEO', 'Teléfono Oficina');
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('CEL', 'Celular');
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('LIK', 'Linkedin');
+INSERT INTO tipocontacto (IDTIPOCONTACTO1, DESCTIPOCONTACTO1) VALUES ('WHA', 'WhatsApp');
 
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('1', 'Abierta')
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('2', 'Selección Múltiple')
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('3', 'Selección única')
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('4', 'Falso/Verdadero')
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('5', 'Completar')
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('6', 'Ubicar')
-    INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('7', 'Emparejar')
-SELECT * FROM dual;
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('1', 'Computación');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('2', 'Administración');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('3', 'Química');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('4', 'Biología');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('5', 'Odontología');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('6', 'Medicina');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('7', 'Sociología');
+INSERT INTO disciplina (IDDISCIPLINA, DESCDISCIPLINA) VALUES ('8', 'Medicina');
+
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('1', 'Prueba Conocimiento I');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('2', 'Prueba Conocimiento II');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('3', 'Prueba Especializada');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('4', 'Prueba Sicológica');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('5', 'Prueba Grupal');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('6', 'Prueba Tecnológica I');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('7', 'Prueba Tecnológica II');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('8', 'Prueba Tecnológica Especializ');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('9', 'Prueba Ingles');
+INSERT INTO TipoPrueba (IDTIPOPRUEBA, DESCTIPOPRUEBA) VALUES ('10', 'Prueba Seguridad');
+
+
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('1', 'Abierta');
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('2', 'Selección Múltiple');
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('3', 'Selección única');
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('4', 'Falso/Verdadero');
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('5', 'Completar');
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('6', 'Ubicar');
+INSERT INTO TipoPregunta (IDTIPOPREGUNTA, DESCTIPOPREGUNTA) VALUES ('7', 'Emparejar');
+
+
 
 -- Se eliminaron letras para que quepa dentro del varchar y de aqui para abajo dependen de otras tablas asi que no se creo inserts
 --perfil
-INSERT ALL
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('1', '1', 'Directivo Superior')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('2', '1', 'Directivo Medio')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('3', '1', 'Directivo Base')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('4', '2', 'Profesional Senior')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('5', '2', 'Profesional Semi Senior')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('6', '2', 'Profesional Junior')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('7', '3', 'Tecnólogo con Experiencia')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('8', '3', 'Tecnólogo')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('9', '3', 'Técnico con Experiencia')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('10', '4', 'Técnico')
-    INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('11', '4', 'Bachiller')
-SELECT * FROM dual;
+
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('1', '1', 'Directivo Superior');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('2', '1', 'Directivo Medio');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('3', '1', 'Directivo Base');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('4', '2', 'Profesional Senior');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('5', '2', 'Profesional Semi Senior');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('6', '2', 'Profesional Junior');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('7', '3', 'Tecnólogo con Experiencia');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('8', '3', 'Tecnólogo');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('9', '3', 'Técnico con Experiencia');
+INSERT INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('10', '4', 'Técnico');
+INSERT  INTO Perfil (IDPERFIL, IDDISCIPLINA, DESCPERFIL) VALUES ('11', '4', 'Bachiller');
+
+
 --Prueba
+INSERT INTO Prueba (IDPRUEBA, IDTIPOPRUEBA, IDDISCIPLINA, IDFASE, DESCPRUEBA, PRUEBAACTIVA, FECHACREADA) VALUES ('1','2','1','1','Prueba Conocimiento II', 1,TO_DATE('2001-01-01', 'YYYY-MM-DD'));
+INSERT INTO Prueba (IDPRUEBA, IDTIPOPRUEBA, IDDISCIPLINA, IDFASE, DESCPRUEBA, PRUEBAACTIVA, FECHACREADA) VALUES ('2','1','1','1','Prueba Conocimiento I', 1,TO_DATE('2001-01-01', 'YYYY-MM-DD'));
+INSERT INTO Prueba (IDPRUEBA, IDTIPOPRUEBA, IDDISCIPLINA, IDFASE, DESCPRUEBA, PRUEBAACTIVA, FECHACREADA) VALUES ('3','7','1','1','Prueba Tecnologica II', 1,TO_DATE('2001-01-01', 'YYYY-MM-DD'));
 --FaseCargo
+INSERT INTO FaseCargo (CONSECFASECARGO, IDTIPOCARGO, IDFASE) VALUES (1, '1','1');
+INSERT INTO FaseCargo (CONSECFASECARGO, IDTIPOCARGO, IDFASE) VALUES (2, '1','2');
+INSERT INTO FaseCargo (CONSECFASECARGO, IDTIPOCARGO, IDFASE) VALUES (3, '1','3');
+INSERT INTO FaseCargo (CONSECFASECARGO, IDTIPOCARGO, IDFASE) VALUES (4, '1','4');
+INSERT INTO FaseCargo (CONSECFASECARGO, IDTIPOCARGO, IDFASE) VALUES (5, '1','1');
+
+
 --PerfilFase
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','1');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','2');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','3');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','4');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','5');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','6');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','7');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('1','8');
+
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','1');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','2');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','3');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','4');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','5');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','6');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','7');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('4','8');
+
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','1');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','2');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','3');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','4');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','5');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','6');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','7');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('7','8');
+
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','1');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','2');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','3');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','4');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','5');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','6');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','7');
+INSERT INTO PerfilFase (IDPERFIL, IDFASE) VALUES ('10','8');
+
+
+
+
 --Pregunta
+INSERT INTO Pregunta (IDPRUEBA, CONSECPREGUNTA, IDTIPOPREGUNTA, DESCPREGUNTA) VALUES ('1',1,'1', 'Prueba Conocimeinto I');
+INSERT INTO Pregunta (IDPRUEBA, CONSECPREGUNTA, IDTIPOPREGUNTA, DESCPREGUNTA) VALUES ('1',2,'4', 'Prueba Conocimeinto I');
+INSERT INTO Pregunta (IDPRUEBA, CONSECPREGUNTA, IDTIPOPREGUNTA, DESCPREGUNTA) VALUES ('1',3,'3', 'Prueba Conocimeinto I');
 --Respuesta
---ItemPerfil
+ INSERT INTO Respuesta (IDPRUEBA, CONSECPREGUNTA, CONSECRESPUESTA, RESPUESTA) VALUES ('1',1,1,'Respuesta 1');
+ INSERT INTO Respuesta (IDPRUEBA, CONSECPREGUNTA, CONSECRESPUESTA, RESPUESTA) VALUES ('1',2,2,'F');
+ INSERT INTO Respuesta (IDPRUEBA, CONSECPREGUNTA, CONSECRESPUESTA, RESPUESTA) VALUES ('1',3,3,'Unica 3');
+--ItemPerfil(director general)
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (1, '3','1','Estudios de pregrado');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (2, '4','1','Estudios de Postgrado');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (3, '8','1','Idiomas');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (4, '10','1','Empleado');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (5, '11','1','Contratista');
+--ItemPerfil(Profesional Senior)
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (6, '3','5','Estudios de pregrado');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (7, '4','5','Estudios de Postgrado');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (8, '8','5','Idiomas');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (9, '10','5','Empleado');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (10, '11','5','Contratista');
+INSERT INTO ItemPerfil (IDITEM, IDTIPOITEMPERFIL, IDPERFIL, DESCITEM) VALUES (10, '6','5','Estudios no formales');
+

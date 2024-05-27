@@ -1,11 +1,12 @@
 import oracledb from 'oracledb';
-oracledb.initOracleClient({ libDir: `${process.env.ORACLE_CLIENT}` })
+
+oracledb.initOracleClient({ libDir: `C:\\Program Files\\oracle\\instantclient_12_1` })
 
 export async function abrirConexion() {
   try {
     const connection = await oracledb.getConnection({
-      user: process.env.PASSWORD,
-      password: process.env.PASSWORD,
+      user: "bd182",
+      password: "bd182",
       connectString: 'localhost:1521/XE'
     });
     return connection;
