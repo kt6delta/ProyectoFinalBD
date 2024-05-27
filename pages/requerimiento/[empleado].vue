@@ -21,15 +21,6 @@ const save = () => {
 };
 
 
-
-let cod = ref(null)
-let salarioMax = ref("")
-let salarioMin = ref("")
-let nVacantes = ref("")
-let descfuncion = ref("")
-let descCarreras = ref("")
-let FechaReque = ref(null)
-
 const updateCod = (newVal:any) => {
   cod.value = newVal
 }
@@ -87,7 +78,7 @@ async function submit() {
     alredyCreate.value = true;
   }
 }
-const currentDate = new Date().toLocaleDateString();
+
 </script>
 
 <template>

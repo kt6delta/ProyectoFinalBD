@@ -14,6 +14,14 @@ import { ProductService } from '@/service/ProductService';
 const products = ref();
 const expandedRows = ref([]);
 const toast = useToast();
+let consecHv = ref("");
+let usuario = ref("");
+let codinstitucion = ref(null);
+let idtipoitemperfil = ref(null);
+let fechaInicAct = ref(null);
+let fechaFinAct = ref(null);
+let descActividad = ref(null);
+let funcionActividad = ref(null);
 
 onMounted(() => {
     ProductService.getProductsWithOrdersSmall().then((data) => (products.value = data));
@@ -111,8 +119,20 @@ const getOrderSeverity = (order) => {
                 </Column>
                 <template #expansion="slotProps">
                     <div class="p-3">
-                        <h>hoja de vida</h>
-                    </div>
+                        <h3>hoja de vida:</h3>
+                        <!-- Imagen -->
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Silueta de usuario" style="max-width: 10%; height: auto; margin-bottom: 10px;" />
+                        
+
+                        <p><strong>Consechv:</strong> {{ slotProps.data.consecHv }}</p>
+                        <p><strong>Usuario:</strong> {{ slotProps.data.usuario }}</p>
+                        <p><strong>Código de Institución:</strong> {{ slotProps.data.codinstitucion }}</p>
+                        <p><strong>ID Tipo de Item de Perfil:</strong> {{ slotProps.data.idtipoitemperfil }}</p>
+                        <p><strong>Fecha de Inicio de Actividad:</strong> {{ slotProps.data.fechaInicAct }}</p>
+                        <p><strong>Fecha de Fin de Actividad:</strong> {{ slotProps.data.fechaFinAct }}</p>
+                        <p><strong>Descripción de la Actividad:</strong> {{ slotProps.data.descActividad }}</p>
+                        <p><strong>Función de la Actividad:</strong> {{ slotProps.data.funcionActividad }}</p>
+                        </div>
                 </template>
             </DataTable>
             <Toast />
