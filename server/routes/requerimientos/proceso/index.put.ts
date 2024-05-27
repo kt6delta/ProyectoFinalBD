@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => { // Define un manejador de e
   const res = event.res as ServerResponse; // Obtiene la respuesta del servidor y la convierte al tipo ServerResponse.
 
   // Verifica si faltan campos requeridos en el cuerpo de la solicitud.
-  if (!body.IDPERFIL || !body.IDFASE || !body.CONVOCATORIA || !body.INVITACION || !body.FECHAINICIO || !body.FECHAFIN || !body.CONSECREQUE) {
+  if (!body.IDPERFIL || !body.IDFASE || !body.CONVOCATORIA || !body.INVITACION || !body.CONSECREQUE) {
     res.writeHead(400, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'información faltante', estatus: 400 }));
     console.log("faltan datos");
@@ -19,23 +19,17 @@ export default defineEventHandler(async (event) => { // Define un manejador de e
 
   try {
     connection = await abrirConexion(); // Abre una conexión a la base de datos.
-    console.log(`
-UPDATE PerfilFase SET 
-IDFASE='${body.IDFASE}'
-WHERE IDPERFIL='${body.IDPERFIL}'
-`);
-    result = await connection.execute(`
-    UPDATE PerfilFase SET 
-    IDFASE='${body.IDFASE}'
-    WHERE IDPERFIL='${body.IDPERFIL}'
-    `);
+    // result = await connection.execute(`
+    // UPDATE PerfilFase SET 
+    // IDFASE='${body.IDFASE}' 
+    // WHERE IDPERFIL='${body.IDPERFIL}'
+    // `);
     result = await connection.execute(`
     UPDATE procesorequerimiento SET
-    IDFASE = '${body.IDFASE}',
-    DESCFUNCION = '${body.DESCFUNCION}',
-    FECHAINICIO = TO_DATE('${body.FECHAINICIO}','DD-MM-YYYY'),
-    DESCCARRERAS = '${body.DESCCARRERAS}',
-    NVACANTES = '${body.CONVOCATORIA}'
+    FECHAINICIO = TO_DATE('${body.FECHAINICIO}','DD/MM/YY'),
+    FECHAFIN = TO_DATE('${body.FECHAFIN}','DD/MM/YY'),
+    INVITACION = '${body.INVITACION}',
+    CONVOCATORIA = '${body.CONVOCATORIA}'
     WHERE CONSECREQUE = '${body.CONSECREQUE}'
 `);
     await connection.execute(`commit`); // Confirma la transacción.

@@ -61,7 +61,11 @@ function formattedFecha(fecha: any) {
     let day = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear().toString().substr(-2);
-    return `${day}/${month}/${year}`;
+    if (`${day}/${month}/${year}` == "aN/aN/aN") {
+        return "";
+    } else {
+        return `${day}/${month}/${year}`;
+    }
 }
 
 async function put(CodReq: string) {
@@ -74,8 +78,8 @@ async function put(CodReq: string) {
                 "IDFASE": selectedFase.value.IDFASE,
                 "CONVOCATORIA": convocatoria.value,
                 "INVITACION": invitacion.value,
-                "FECHAINICIO": fechaInicio.value,
-                "FECHAFIN": fechaFin.value
+                "FECHAINICIO": formattedFecha(fechaInicio.value),
+                "FECHAFIN": formattedFecha(fechaFin.value)
             }
         })
     }
