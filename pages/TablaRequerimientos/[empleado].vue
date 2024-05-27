@@ -3,9 +3,16 @@ definePageMeta({
     layout: "landing",
 });
 import InputsRequerimiento from '@/components/InputsRequerimiento.vue';
+import inputsProcesoRequerimiento from '@/components/inputsProcesoRequerimiento.vue';
+import { ref } from 'vue';
+
 let disable = ref(true)
 function EditRequerimiento() {
     disable.value = !disable.value
+}
+let disable2 = ref(true)
+function EditProcRequerimiento() {
+    disable2.value = !disable2.value
 }
 const router = useRouter();
 const route = useRoute();
@@ -15,14 +22,18 @@ function Candidatos() {
 }
 const currentDate = new Date().toLocaleDateString();
 
-import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 
 const requerimiento = ref();
 
 onMounted(async () => {
-    requerimiento.value = await $fetch(`/requerimientos/${route.params.empleado}`);
-    //adiciona diciplina y perfil y proceso
+    let req = await $fetch('/requerimientos/qwe');
+    let proceso = await $fetch(`/requerimientos/proceso/${route.params.empleado}`);
+    const combinedArray = req.map((item, index) => {
+        let copy = { ...item, ...proceso[index] }
+        return copy;
+    });
+    requerimiento.value = combinedArray;
 });
 
 const expandedRows = ref([]);
@@ -92,7 +103,7 @@ const getSeverity = (fase) => {
                 <Column expander style="width: 5rem" />
                 <Column field="Consec" header="Consec">
                     <template #body="slotProps">
-                       <p>{{ slotProps.data.CONSECREQUE }}</p>
+                        <p>{{ slotProps.data.CONSECREQUE }}</p>
                     </template>
                 </Column>
                 <Column header="Perfil">
@@ -102,7 +113,7 @@ const getSeverity = (fase) => {
                 </Column>
                 <Column field="diciplina" header="Diciplina">
                     <template #body="slotProps">
-                        {{ slotProps.data.disciplina.DESCDISCIPLINA }}
+                        {{ slotProps.data.DISCIPLINA.DESCDISCIPLINA }}
                     </template>
                 </Column>
                 <Column field="faseFaltante" header="FasesFaltantes">
@@ -112,29 +123,30 @@ const getSeverity = (fase) => {
                 </Column>
                 <Column field="faseActual" header="FaseActual">
                     <template #body="slotProps">
-                        <Tag :value="slotProps.data.fase.DESCFASE" :severity="getSeverity(slotProps.data.fase.DESCFASE)" />
+                        <Tag :value="slotProps.data.fase.DESCFASE"
+                            :severity="getSeverity(slotProps.data.fase.DESCFASE)" />
                     </template>
                 </Column>
                 <template #expansion="slotProps">
-                    <InputsRequerimiento :PropisDisable="disable" :PropCod=slotProps.data.CONSECREQUE :PropSalarioMax="slotProps.data.SALARIOMAX" :PropSalarioMin="slotProps.data.SALARIOMIN"
-                        :PropNVacantes="slotProps.data.NVACANTES" :PropDescfuncion="slotProps.data.DESCFUNCION" :PropDescCarreras="slotProps.data.DESCCARRERAS" :PropFechaReque="slotProps.data.FECHAREQUE" />
+                    <InputsRequerimiento :PropisDisable="disable" :PropCod=slotProps.data.CONSECREQUE
+                        :PropSalarioMax="slotProps.data.SALARIOMAX" :PropSalarioMin="slotProps.data.SALARIOMIN"
+                        :PropNVacantes="slotProps.data.NVACANTES" :PropDescfuncion="slotProps.data.DESCFUNCION"
+                        :PropDescCarreras="slotProps.data.DESCCARRERAS" :PropFechaReque="slotProps.data.FECHAREQUE" />
                     <div class="flex justify-end mr-5">
                         <Button aria-label="Submit" @click="EditRequerimiento">
                             <Icon name="bxs:pencil" size="25" />
                         </Button>
                     </div>
-                    <div class="p-3">
-                        <h1>Componente para editar TABLA procesorequerimiento
-                            IDPERFIL ->perfil
-                            IDFASE ->fase
-                            CONSECREQUE
-                            CONSEPROCESO
-                            FECHAINICIO
-                            FECHAFIN
-                            CONVOCATORIA
-                            INVITACION (correo)
-                        </h1>
-                        <Icon name="bxs:pencil" size="25" />
+
+                    <inputsProcesoRequerimiento :propisDisable="disable2"
+                        :PropselectedPerfil="slotProps.data.PERFIL.DESCPERFIL"
+                        :PropselectedFase="slotProps.data.FASE.DESCFASE" :Propconvocatoria="slotProps.data.CONVOCATORIA"
+                        :Propinvitacion="slotProps.data.INVITACION" :PropfechaInicio="slotProps.data.FECHAINICIO"
+                        :PropfechaFin="slotProps.data.FECHAFIN" />
+                    <div class="flex justify-end mr-5">
+                        <Button aria-label="Submit" @click="EditProcRequerimiento">
+                            <Icon name="bxs:pencil" size="25" />
+                        </Button>
                     </div>
                     <div class="p-3">
                         <Button label="Candidatos" severity="success" class="text-white bg-primary p-1"
