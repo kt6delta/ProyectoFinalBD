@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
   try {
     connection = await abrirConexion();
     let CODEMPLEADO = await connection.execute(`SELECT CODEMPLEADO FROM Empleado where NOMEMPLEADO = '${body.NOMEMPLEADO}' and APELLEMPLEADO = '${body.APELLEMPLEADO}' and FECHANAC = TO_DATE('${FECHANAC}','DD-MM-YYYY') and CORREO = '${body.CORREO}'`);
-    console.log(CODEMPLEADO)
     if (CODEMPLEADO.rows.length > 0) {
       CODEMPLEADO = CODEMPLEADO.rows[0][0];
       let IDTIPOCARGO = await connection.execute(`SELECT IDTIPOCARGO FROM CARGO WHERE CODEMPLEADO = '${CODEMPLEADO}'`);

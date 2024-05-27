@@ -1,41 +1,34 @@
 import { ServerResponse } from 'http';
 import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
+import { ProcesoReq } from '@/server/routes/requerimientos/proceso/index.post';
 
 export default defineEventHandler(async (event) => { // Define un manejador de eventos asíncrono para manejar solicitudes HTTP.
   const body = await readBody(event); // Lee y almacena el cuerpo de la solicitud.
   const res = event.res as ServerResponse; // Obtiene la respuesta del servidor y la convierte al tipo ServerResponse.
 
- // Verifica si faltan campos requeridos en el cuerpo de la solicitud.
- if ( !body.FECHAREQUE || !body.SALARIOMAX || !body.SALARIOMIN || !body.DESCFUNCION || !body.DESCCARRERAS || !body.NVACANTES) {
-  res.writeHead(400, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ error: 'información faltante', estatus: 400 }));
-  console.log("faltan datos");
-  return;
-}
+  // Verifica si faltan campos requeridos en el cuerpo de la solicitud.
+  if (!body.FECHAREQUE || !body.SALARIOMAX || !body.SALARIOMIN || !body.DESCFUNCION || !body.DESCCARRERAS || !body.NVACANTES) {
+    res.writeHead(400, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'información faltante', estatus: 400 }));
+    console.log("faltan datos");
+    return;
+  }
 
   // Inicializa variables necesarias para la inserción.
   let result;
   let FECHAREQUE: Date | string = new Date(body.FECHAREQUE); // Convierte la fecha de nacimiento a un objeto Date.
   FECHAREQUE = `${FECHAREQUE.getDate().toString().padStart(2, '0')}-${(FECHAREQUE.getMonth() + 1).toString().padStart(2, '0')}-${FECHAREQUE.getFullYear()}`; // Formatea la fecha de nacimiento.
-
-
   let connection; // Declara una variable para la conexión a la base de datos.
-
+  let CODEMPLEADO;
+  let CONSECREQUE;
   try {
     connection = await abrirConexion(); // Abre una conexión a la base de datos.
     result = await connection.execute(`SELECT * FROM REQUERIMIENTO`); // Ejecuta una consulta SQL para seleccionar todos los empleados.
-    let CONSECREQUE = (result.rows.length + 1).toString(); // Calcula el código del empleado sumando 1 a la cantidad de filas obtenidas.
+    CONSECREQUE = (result.rows.length + 1).toString(); // Calcula el código del empleado sumando 1 a la cantidad de filas obtenidas.
 
-    event?.context?.params?.empleado
-    let CODEMPLEADO = "1";
-    let EMP_CODEMPLEADO = "1"; // Cadena de texto (string) que representa el número 1
-    
-    // Verifica si el empleado ya existe.
-    if (Repeticion(result.rows, body)) {
-      res.writeHead(409, { 'Content-Type': 'application/json' }); // Establece el código de estado HTTP a 409 (Conflict).
-      res.end(JSON.stringify({ error: 'Empleado ya existe' })); // Envía una respuesta con un mensaje de error.
-      return; // Termina la ejecución de la función.
-    }
+    CODEMPLEADO = await connection.execute(`SELECT CODEMPLEADO FROM Empleado where NOMEMPLEADO = '${event?.context?.params?.empleado}'`);
+    CODEMPLEADO = CODEMPLEADO.rows[0][0];
+    let EMP_CODEMPLEADO = CODEMPLEADO;
 
     // Inserta el nuevo empleado en la base de datos.
     result = await connection.execute(`
@@ -45,34 +38,13 @@ export default defineEventHandler(async (event) => { // Define un manejador de e
     await connection.execute(`commit`); // Confirma la transacción.
   } catch (err) {
     console.log(err); // Imprime el error en la consola.
+    res.writeHead(400, { 'Content-Type': 'application/json' }); // Establece el código de estado HTTP a 201 (Created).
+    res.end(JSON.stringify({ message: 'Fallo a la hora de crear Requerimiento' })); // Envía una respuesta con un mensaje de éxito.
+    return;
   } finally {
     await cerrarConexion(connection); // Cierra la conexión a la base de datos.
     if (result) {
-      res.writeHead(201, { 'Content-Type': 'application/json' }); // Establece el código de estado HTTP a 201 (Created).
-      res.end(JSON.stringify({ message: 'Empleado creado correctamente' })); // Envía una respuesta con un mensaje de éxito.
-      return;
+      await ProcesoReq(res, body.IDPERFIL, body.IDFASE, body.CONVOCATORIA, body.INVITACION, body.FECHAINICIO, body.FECHAFIN, CODEMPLEADO, CONSECREQUE);
     }
   }
 });
-
-// Función para verificar si un empleado ya existe en la base de datos.
-function Repeticion(rows: any[], body: any): boolean {
-  const bodyArray = [
-    body.DESCFUNCION,
-    body.DESCCARRERAS,
-    new Date(body.FECHAREQUE),
-    body.NVACANTES
-
-  ];
-
-  for (const row of rows) {
-    const rowArray = row.slice(7, 8).concat(row.slice(4, 9));
-    rowArray[2] = new Date(rowArray[2]);
-
-    if (JSON.stringify(rowArray) === JSON.stringify(bodyArray)) {
-      return true;
-    }
-  }
-
-  return false;
-}

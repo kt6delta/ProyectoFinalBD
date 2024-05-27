@@ -1,15 +1,13 @@
+
 import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
 
 export default defineEventHandler(async (event) => {
   try {
     const connection = await abrirConexion();
-    let NameEmpleado= event?.context?.params?.empleado || '';
-    let result=await connection.execute(`SELECT CODEMPLEADO FROM empleado WHERE NOMEMPLEADO = '${NameEmpleado}'`);
-    let CodEmpleado = result.rows;
-    result = await connection.execute(`SELECT * FROM requerimiento WHERE CODEMPLEADO = ${CodEmpleado}`);
+    let result = await connection.execute(`select * from perfil`);
     await cerrarConexion(connection);
     result = result.rows;
-    const keys = ['CONSECREQUE', 'CODEMPLEADO', 'EMP_CODEMPLEADO', 'FECHAREQUE', 'SALARIOMAX', 'SALARIOMIN', 'DESCFUNCION', 'DESCCARRERAS', 'NVACANTES'];
+    const keys = ['IDPERFIL','IDDISCIPLINA', 'DESCPERFIL'];
     result = result.map((item: any[]) => {
       return item.reduce((obj, value, index) => {
         obj[keys[index]] = value;

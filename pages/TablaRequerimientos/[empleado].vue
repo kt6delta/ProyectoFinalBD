@@ -22,8 +22,7 @@ const requerimiento = ref();
 
 onMounted(async () => {
     requerimiento.value = await $fetch(`/requerimientos/${route.params.empleado}`);
-    console.log(requerimiento.value);
-    //adiciona diciplina y perfil
+    //adiciona diciplina y perfil y proceso
 });
 
 const expandedRows = ref([]);
