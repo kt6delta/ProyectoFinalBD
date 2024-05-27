@@ -21,7 +21,7 @@ async function generateEmployeeCode() {
   } catch (error) {
     console.error('Error en la conexión:', error);
   }
-} 
+}
 
 const BtnItems = [
   {
@@ -42,8 +42,6 @@ const BtnItems = [
 
 const save = () => {
   submit();
-  const router = useRouter();
-  router.push('/');
 };
 
 let message = ref("");
@@ -58,22 +56,32 @@ async function submit() {
       isIncomplete.value = true;
       return;
     }
-    await $fetch('/empleados', {
+    const response = await $fetch('/empleados', {
       method: 'POST',
       body: {
         "NOMEMPLEADO": nombre.value,
         "APELLEMPLEADO": apellido.value,
         "FECHANAC": born.value,
         "CORREO": email.value,
-        "cargo": selectedCargos.value
+        "CARGO": selectedCargos.value
       }
     })
-    message.value = "Empleado creado";
-    create.value = true;
+    if ((response as Response).status == 201) {
+      message.value = "Empleado creado";
+      create.value = true;
+      setTimeout(() => {
+        const router = useRouter();
+        router.push('/');
+      }, 2000);
+    }
+    if ((response as Response).status == 409) {
+      message.value = "Ya existe un empleado";
+      alredyCreate.value = true;
+    }
   } catch (error) {
     console.error('Error during fetch:', error);
-    message.value = "Ya existe un empleado";
-    alredyCreate.value = true;
+    message.value = "Error al crear empleado";
+      isIncomplete.value = true;
   }
 }
 
@@ -93,7 +101,7 @@ async function Update() {
         "APELLEMPLEADO": apellido.value,
         "FECHANAC": born.value,
         "CORREO": email.value,
-        "cargo": selectedCargos.value
+        "CARGO": selectedCargos.value
       }
     })
     message.value = "Empleado actualizado";

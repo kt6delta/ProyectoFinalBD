@@ -2,9 +2,39 @@
 definePageMeta({
     layout: "landing",
 });
+import InputsRequerimiento from '@/components/InputsRequerimiento.vue';
+let cod = ref(null)
+let salarioMax = ref("")
+let salarioMin = ref("")
+let nVacantes = ref("")
+let descfuncion = ref("")
+let descCarreras = ref("")
+let FechaReque = ref(null)
+const updateCod = (newVal) => {
+    cod.value = newVal
+}
+const updateSalarioMax = (newVal) => {
+    salarioMax.value = newVal
+}
+const updateNVacantes = (newVal) => {
+    nVacantes.value = newVal
+}
+const updateDescfuncion = (newVal) => {
+    descfuncion.value = newVal
+}
+const updateDescCarreras = (newVal) => {
+    descCarreras.value = newVal
+}
+const updateFechaReque = (newVal) => {
+    FechaReque.value = newVal
+}
+const updateSalarioMin = (newVal) => {
+    salarioMin.value = newVal
+}
 
 import { ref, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
+
 import { ProductService } from '@/service/ProductService';
 
 const currentDate = new Date().toLocaleDateString();
@@ -100,16 +130,11 @@ function Candidatos() {
                     </template>
                 </Column>
                 <template #expansion="slotProps">
-                    <div class="p-3">
-                        <h>Componente para editar TABLA Requerimiento
-                            CONSECREQUE
-                            FECHAREQUE
-                            SALARIOMAX
-                            SALARIOMIN
-                            DESCFUNCION
-                            DESCCARRERAS
-                            NVACANTES
-                        </h>
+                    <InputsRequerimiento @update:cod="updateCod" @update:salarioMax="updateSalarioMax"
+                        @update:salarioMin="updateSalarioMin" @update:nVacantes="updateNVacantes"
+                        @update:descfuncion="updateDescfuncion" @update:descCarreras="updateDescCarreras"
+                        @update:FechaReque="updateFechaReque" />
+                    <div class="flex justify-end mr-5">
                         <Icon name="bxs:pencil" size="25" />
                     </div>
                     <div class="p-3">

@@ -22,6 +22,36 @@ const save = () => {
 
 
 
+let cod = ref(null)
+let salarioMax = ref("")
+let salarioMin = ref("")
+let nVacantes = ref("")
+let descfuncion = ref("")
+let descCarreras = ref("")
+let FechaReque = ref(null)
+
+const updateCod = (newVal:any) => {
+  cod.value = newVal
+}
+const updateSalarioMax = (newVal:any) => {
+  salarioMax.value = newVal
+}
+const updateNVacantes = (newVal:any) => {
+  nVacantes.value = newVal
+}
+const updateDescfuncion = (newVal:any) => {
+  descfuncion.value = newVal
+}
+const updateDescCarreras = (newVal:any) => {
+  descCarreras.value = newVal
+}
+const updateFechaReque = (newVal:any) => {
+  FechaReque.value = newVal
+}
+const updateSalarioMin = (newVal:any) => {
+  salarioMin.value = newVal
+}
+
 let message = ref("");
 let create = ref(false);
 let alredyCreate = ref(false);
@@ -30,7 +60,7 @@ let isIncomplete = ref(false);
 async function submit() {
   const CODEMPLEADO = localStorage.getItem('CODEMPLEADO');
   try {
-    if ( !salarioMax.value || !salarioMin.value || !FechaReque.value || !descfuncion.value || !descCarreras.value || !nVacantes.value) {
+    if (!salarioMax.value || !salarioMin.value || !FechaReque.value || !descfuncion.value || !descCarreras.value || !nVacantes.value) {
       message.value = "Faltan datos";
       isIncomplete.value = true;
       return;
@@ -43,21 +73,21 @@ async function submit() {
         "SALARIOMAX": salarioMax.value,
         "SALARIOMIN": salarioMin.value,
         "DESCFUNCION": descfuncion.value,
-        "DESCCARRERAS":descCarreras.value,
+        "DESCCARRERAS": descCarreras.value,
         "NVACANTES": nVacantes.value
       }
     })
     message.value = "requerimiento creado";
     create.value = true;
-  } 
-  
+  }
+
   catch (error) {
     console.error('Error during fetch:', error);
     message.value = "Ya existe un requerimiento";
     alredyCreate.value = true;
   }
 }
-
+const currentDate = new Date().toLocaleDateString();
 </script>
 
 <template>
@@ -139,5 +169,5 @@ async function submit() {
     <InlineMessage v-if="isIncomplete" severity="error">{{ message }}</InlineMessage>
     <InlineMessage v-else-if="alredyCreate" severity="warn">{{ message }}</InlineMessage>
     <InlineMessage v-else-if="create" severity="success">{{ message }}</InlineMessage>
-    </div>
+  </div>
 </template>
