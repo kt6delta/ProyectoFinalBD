@@ -15,7 +15,7 @@ let salarioMin = ref(props.PropSalarioMin || "")
 let nVacantes = ref(props.PropNVacantes || "")
 let descfuncion = ref(props.PropDescfuncion || "")
 let descCarreras = ref(props.PropDescCarreras || "")
-let FechaReque = ref(props.PropFechaReque || null)
+let FechaReque = ref(formattedFecha(props.PropFechaReque) || null)
 
 const emit = defineEmits(['update:cod', 'update:salarioMax', 'update:salarioMin', 'update:nVacantes', 'update:descfuncion', 'update:descCarreras', 'update:FechaReque'])
 
@@ -54,6 +54,13 @@ function put() {
 }
 function delet() {
 
+}
+function formattedFecha(fecha: any) {
+    let date = new Date(fecha);
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear().toString().substr(-2);
+    return `${day}/${month}/${year}`;
 }
 </script>
 

@@ -95,6 +95,10 @@ async function submit() {
     })
     message.value = "requerimiento creado";
     create.value = true;
+    setTimeout(() => {
+      const router = useRouter();
+      router.push(`/TablaRequerimientos/${route.params.empleado}`);
+    }, 2000);
   }
   catch (error) {
     console.error('Error during fetch:', error);

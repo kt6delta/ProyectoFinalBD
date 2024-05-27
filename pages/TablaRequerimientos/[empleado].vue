@@ -16,18 +16,18 @@ function EditProcRequerimiento() {
 }
 const router = useRouter();
 const route = useRoute();
-let CodRequerimiento = 0;
+let CodRequerimiento =ref();
 function Candidatos() {
-    router.push(`/TablaCandidatos/${route.params.empleado}/${CodRequerimiento}`);
+    router.push(`/TablaCandidatos/${route.params.empleado}/${CodRequerimiento.value}`);
 }
 const currentDate = new Date().toLocaleDateString();
 
 import { useToast } from 'primevue/usetoast';
 
-const requerimiento = ref();
+const requerimiento = ref([]);
 
 onMounted(async () => {
-    let req = await $fetch('/requerimientos/qwe');
+    let req = await $fetch(`/requerimientos/${route.params.empleado}`);
     let proceso = await $fetch(`/requerimientos/proceso/${route.params.empleado}`);
     const combinedArray = req.map((item, index) => {
         let copy = { ...item, ...proceso[index] }
@@ -40,13 +40,14 @@ const expandedRows = ref([]);
 const toast = useToast();
 
 const onRowExpand = (event) => {
+    CodRequerimiento.value = event.data.CONSECREQUE;
     toast.add({ severity: 'info', summary: 'Requerimiento Expandido', detail: event.data.CONSECREQUE, life: 3000 });
 };
 const onRowCollapse = (event) => {
     toast.add({ severity: 'success', summary: 'Requerimiento Contraido', detail: event.data.CONSECREQUE, life: 3000 });
 };
 const expandAll = () => {
-    expandedRows.value = requerimiento.value.reduce((acc, p) => (acc[p.CONSECREQUE] = true) && acc, {});
+    expandedRows.value = requerimiento.value.reduce((acc, p) => (acc[p] = true) && acc, {});
 };
 const collapseAll = () => {
     expandedRows.value = null;
@@ -54,25 +55,25 @@ const collapseAll = () => {
 
 const getSeverity = (fase) => {
     switch (fase) {
-        case 'Registrar Requerimiento':
+        case '1':
             return 'Primary';
 
-        case 'Asignar Perfil':
+        case '2':
             return 'secondary';
 
-        case 'Publicar Convocatoria':
+        case '3':
             return 'success';
 
-        case 'Mandar Invitación':
+        case '4':
             return 'info';
 
-        case 'Preselección':
+        case '5':
             return 'warning';
 
-        case 'Realizar Prueba':
+        case '6':
             return 'danger';
 
-        case 'Entrevista':
+        case '7':
             return 'contrast';
 
         default:
@@ -90,8 +91,7 @@ const getSeverity = (fase) => {
 
     <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-12">
         <div class="card">
-
-            <DataTable v-model:expandedRows="expandedRows" :value="requerimiento" dataKey="id" @rowExpand="onRowExpand"
+            <DataTable v-model:expandedRows="expandedRows" :value="requerimiento" dataKey="CONSECREQUE" @rowExpand="onRowExpand"
                 @rowCollapse="onRowCollapse" tableStyle="min-width: 60rem">
 
                 <template #header>
@@ -108,7 +108,7 @@ const getSeverity = (fase) => {
                 </Column>
                 <Column header="Perfil">
                     <template #body="slotProps">
-                        <p>{{ slotProps.data.perfil.DESCPERFIL }}</p>
+                        <p>{{ slotProps.data.PERFIL.DESCPERFIL }}</p>
                     </template>
                 </Column>
                 <Column field="diciplina" header="Diciplina">
@@ -118,13 +118,13 @@ const getSeverity = (fase) => {
                 </Column>
                 <Column field="faseFaltante" header="FasesFaltantes">
                     <template #body="slotProps">
-                        <Rating :modelValue="slotProps.data.fase.DESCFASE" readonly :cancel="false" />
+                        <Rating :modelValue="slotProps.data.FASE.IDFASE" readonly :cancel="false" :stars="8" />
                     </template>
                 </Column>
                 <Column field="faseActual" header="FaseActual">
                     <template #body="slotProps">
-                        <Tag :value="slotProps.data.fase.DESCFASE"
-                            :severity="getSeverity(slotProps.data.fase.DESCFASE)" />
+                        <Tag :value="slotProps.data.FASE.DESCFASE"
+                            :severity="getSeverity(slotProps.data.FASE.IDFASE)" />
                     </template>
                 </Column>
                 <template #expansion="slotProps">
@@ -137,10 +137,9 @@ const getSeverity = (fase) => {
                             <Icon name="bxs:pencil" size="25" />
                         </Button>
                     </div>
-
-                    <inputsProcesoRequerimiento :propisDisable="disable2"
-                        :PropselectedPerfil="slotProps.data.PERFIL.DESCPERFIL"
-                        :PropselectedFase="slotProps.data.FASE.DESCFASE" :Propconvocatoria="slotProps.data.CONVOCATORIA"
+                    <inputsProcesoRequerimiento :PropisDisable2="disable2"
+                        :PropselectedPerfil="slotProps.data.PERFIL"
+                        :PropselectedFase="slotProps.data.FASE" :Propconvocatoria="slotProps.data.CONVOCATORIA"
                         :Propinvitacion="slotProps.data.INVITACION" :PropfechaInicio="slotProps.data.FECHAINICIO"
                         :PropfechaFin="slotProps.data.FECHAFIN" />
                     <div class="flex justify-end mr-5">

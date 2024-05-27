@@ -4,10 +4,10 @@ import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
 export default defineEventHandler(async (event) => {
   try {
     const connection = await abrirConexion();
-    let result = await connection.execute(`select * from perfil`);
+    let result = await connection.execute(`select IDPERFIL,DESCPERFIL from perfil`);
     await cerrarConexion(connection);
     result = result.rows;
-    const keys = ['IDPERFIL','IDDISCIPLINA', 'DESCPERFIL'];
+    const keys = ['IDPERFIL', 'DESCPERFIL'];
     result = result.map((item: any[]) => {
       return item.reduce((obj, value, index) => {
         obj[keys[index]] = value;

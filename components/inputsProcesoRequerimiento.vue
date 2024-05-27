@@ -2,7 +2,7 @@
 import { ref, watch, defineEmits, watchEffect } from 'vue'
 
 const props = defineProps({
-    PropisDisable: Boolean,
+    PropisDisable2: Boolean,
     PropselectedPerfil: Array,
     PropselectedFase: Array,
     Propconvocatoria: String,
@@ -21,8 +21,8 @@ idFase = idFase.value[0] as any;
 
 let convocatoria = ref(props.Propconvocatoria || "")
 let invitacion = ref(props.Propinvitacion || "")
-let fechaInicio = ref(props.PropfechaInicio || null)
-let fechaFin = ref(props.PropfechaFin || null)
+let fechaInicio = ref(formattedFecha(props.PropfechaInicio) || null)
+let fechaFin = ref(formattedFecha(props.PropfechaFin) || null)
 
 const emit = defineEmits(['update:selectedPerfil', 'update:selectedFase', 'update:convocatoria', 'update:invitacion', 'update:fechaInicio', 'update:fechaFin'])
 
@@ -50,12 +50,19 @@ watch(fechaFin, (newVal) => {
     emit('update:fechaFin', newVal)
 })
 
-let isDisable = ref(props.PropisDisable)
+let isDisable = ref()
 
 watchEffect(() => {
-    isDisable.value = props.PropisDisable
+    isDisable.value = props.PropisDisable2
 })
 
+function formattedFecha(fecha: any) {
+    let date = new Date(fecha);
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear().toString().substr(-2);
+    return `${day}/${month}/${year}`;
+}
 </script>
 
 <template>
