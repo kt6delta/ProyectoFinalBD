@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref, watch, defineEmits, watchEffect } from 'vue'
+import { ref, watch, defineEmits, watchEffect, defineExpose } from 'vue'
 
 const props = defineProps({
     PropisDisable2: Boolean,
-    PropselectedPerfil: Array,
-    PropselectedFase: Array,
+    PropselectedPerfil: Object,
+    PropselectedFase: Object,
     Propconvocatoria: String,
     Propinvitacion: String,
-    PropfechaInicio: Date,
-    PropfechaFin: Date
+    PropfechaInicio: String,
+    PropfechaFin: String
 });
 
 const selectedPerfil = ref(props.PropselectedPerfil || null);
@@ -63,6 +63,26 @@ function formattedFecha(fecha: any) {
     let year = date.getFullYear().toString().substr(-2);
     return `${day}/${month}/${year}`;
 }
+
+async function put(CodReq: string) {
+    if (selectedPerfil.value && selectedFase.value) {
+        await $fetch(`/requerimientos/proceso`, {
+            method: 'PUT',
+            body: {
+                "CONSECREQUE": CodReq,
+                "IDPERFIL": selectedPerfil.value.IDPERFIL,
+                "IDFASE": selectedFase.value.IDFASE,
+                "CONVOCATORIA": convocatoria.value,
+                "INVITACION": invitacion.value,
+                "FECHAINICIO": fechaInicio.value,
+                "FECHAFIN": fechaFin.value
+            }
+        })
+    }
+}
+defineExpose({
+    put
+})
 </script>
 
 <template>

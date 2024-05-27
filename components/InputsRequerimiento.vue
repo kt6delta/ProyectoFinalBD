@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, defineEmits, watchEffect } from 'vue'
+import { ref, watch, defineEmits, watchEffect, defineExpose } from 'vue'
 
 const props = defineProps({
     PropisDisable: Boolean,
@@ -8,7 +8,7 @@ const props = defineProps({
     PropNVacantes: Number,
     PropDescfuncion: String,
     PropDescCarreras: String,
-    PropFechaReque: Date
+    PropFechaReque: String
 });
 let salarioMax = ref(props.PropSalarioMax || "")
 let salarioMin = ref(props.PropSalarioMin || "")
@@ -49,12 +49,24 @@ watchEffect(() => {
     isDisable.value = props.PropisDisable
 })
 
-function put() {
-
+async function put(CodReq: string) {
+    await $fetch(`/requerimientos`, {
+        method: 'PUT',
+        body: {
+            "CONSECREQUE": CodReq,
+            "SALARIOMAX": salarioMax.value,
+            "SALARIOMIN":salarioMin.value,
+           "NVACANTES": nVacantes.value,
+           "DESCFUNCION": descfuncion.value,
+            "DESCCARRERAS":descCarreras.value,
+            "FECHAREQUE": FechaReque.value
+        }
+    })
 }
-function delet() {
 
-}
+defineExpose({
+    put
+})
 function formattedFecha(fecha: any) {
     let date = new Date(fecha);
     let day = ("0" + date.getDate()).slice(-2);

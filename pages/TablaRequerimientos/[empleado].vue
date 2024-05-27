@@ -14,9 +14,22 @@ let disable2 = ref(true)
 function EditProcRequerimiento() {
     disable2.value = !disable2.value
 }
+
+let RequerimientoC = ref(null)
+function putRequerimiento(codReq) {
+    EditRequerimiento()
+    RequerimientoC.value.put(codReq);
+}
+
+let RequeProcesC = ref(null)
+function PutProcRequerimiento(codReq) {
+    EditProcRequerimiento()
+    RequeProcesC.value.put(codReq);
+}
+
 const router = useRouter();
 const route = useRoute();
-let CodRequerimiento =ref();
+let CodRequerimiento = ref();
 function Candidatos() {
     router.push(`/TablaCandidatos/${route.params.empleado}/${CodRequerimiento.value}`);
 }
@@ -91,8 +104,8 @@ const getSeverity = (fase) => {
 
     <div class="md:grid-cols-1 grid-cols-2 gap-10 mx-auto max-w-screen-lg mt-12">
         <div class="card">
-            <DataTable v-model:expandedRows="expandedRows" :value="requerimiento" dataKey="CONSECREQUE" @rowExpand="onRowExpand"
-                @rowCollapse="onRowCollapse" tableStyle="min-width: 60rem">
+            <DataTable v-model:expandedRows="expandedRows" :value="requerimiento" dataKey="CONSECREQUE"
+                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" tableStyle="min-width: 60rem">
 
                 <template #header>
                     <div class="flex flex-wrap justify-end gap-2">
@@ -118,7 +131,7 @@ const getSeverity = (fase) => {
                 </Column>
                 <Column field="faseFaltante" header="FasesFaltantes">
                     <template #body="slotProps">
-                        <Rating :modelValue="slotProps.data.FASE.IDFASE" readonly :cancel="false" :stars="8" />
+                        <Rating :modelValue="Number(slotProps.data.FASE.IDFASE)" readonly :cancel="false" :stars="8" />
                     </template>
                 </Column>
                 <Column field="faseActual" header="FaseActual">
@@ -131,23 +144,35 @@ const getSeverity = (fase) => {
                     <InputsRequerimiento :PropisDisable="disable" :PropCod=slotProps.data.CONSECREQUE
                         :PropSalarioMax="slotProps.data.SALARIOMAX" :PropSalarioMin="slotProps.data.SALARIOMIN"
                         :PropNVacantes="slotProps.data.NVACANTES" :PropDescfuncion="slotProps.data.DESCFUNCION"
-                        :PropDescCarreras="slotProps.data.DESCCARRERAS" :PropFechaReque="slotProps.data.FECHAREQUE" />
+                        :PropDescCarreras="slotProps.data.DESCCARRERAS" :PropFechaReque="slotProps.data.FECHAREQUE"
+                        ref="RequerimientoC" />
                     <div class="flex justify-end mr-5">
-                        <Button aria-label="Submit" @click="EditRequerimiento">
+                        <Button v-if="disable" aria-label="Submit" @click="EditRequerimiento">
                             <Icon name="bxs:pencil" size="25" />
                         </Button>
+                        <Button v-if="!disable" aria-label="Submit" @click="putRequerimiento(slotProps.data.CONSECREQUE)">
+                            <Icon name="ic:baseline-check" size="25" />
+                        </Button>
+                        <Button v-if="!disable" aria-label="Submit" @click="EditRequerimiento" class="m-5">
+                            <Icon name="streamline:delete-1-solid" size="16" />
+                        </Button>
                     </div>
-                    <inputsProcesoRequerimiento :PropisDisable2="disable2"
-                        :PropselectedPerfil="slotProps.data.PERFIL"
+                    <inputsProcesoRequerimiento :PropisDisable2="disable2" :PropselectedPerfil="slotProps.data.PERFIL"
                         :PropselectedFase="slotProps.data.FASE" :Propconvocatoria="slotProps.data.CONVOCATORIA"
                         :Propinvitacion="slotProps.data.INVITACION" :PropfechaInicio="slotProps.data.FECHAINICIO"
-                        :PropfechaFin="slotProps.data.FECHAFIN" />
+                        :PropfechaFin="slotProps.data.FECHAFIN" ref="RequeProcesC" />
                     <div class="flex justify-end mr-5">
-                        <Button aria-label="Submit" @click="EditProcRequerimiento">
+                        <Button v-if="disable2" aria-label="Submit" @click="EditProcRequerimiento">
                             <Icon name="bxs:pencil" size="25" />
                         </Button>
+                        <Button v-if="!disable2" aria-label="Submit" @click="PutProcRequerimiento(slotProps.data.CONSECREQUE)">
+                            <Icon name="ic:baseline-check" size="25" />
+                        </Button>
+                        <Button v-if="!disable2" aria-label="Submit" @click="EditProcRequerimiento" class="m-5">
+                            <Icon name="streamline:delete-1-solid" size="16" />
+                        </Button>
                     </div>
-                    <div class="p-3">
+                    <div class="p-3 ml-10">
                         <Button label="Candidatos" severity="success" class="text-white bg-primary p-1"
                             @click="Candidatos" />
                     </div>
