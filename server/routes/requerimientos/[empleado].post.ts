@@ -1,6 +1,5 @@
 import { ServerResponse } from 'http';
 import { abrirConexion, cerrarConexion } from '@/server/utils/conection';
-import { obtenerCodigoEmpleado } from '@/server/routes/empleados/index.post';
 
 export default defineEventHandler(async (event) => { // Define un manejador de eventos asíncrono para manejar solicitudes HTTP.
   const body = await readBody(event); // Lee y almacena el cuerpo de la solicitud.
@@ -18,7 +17,6 @@ export default defineEventHandler(async (event) => { // Define un manejador de e
   let result;
   let FECHAREQUE: Date | string = new Date(body.FECHAREQUE); // Convierte la fecha de nacimiento a un objeto Date.
   FECHAREQUE = `${FECHAREQUE.getDate().toString().padStart(2, '0')}-${(FECHAREQUE.getMonth() + 1).toString().padStart(2, '0')}-${FECHAREQUE.getFullYear()}`; // Formatea la fecha de nacimiento.
-  let FECHAINGRE = `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`; // Obtiene y formatea la fecha actual.
 
 
   let connection; // Declara una variable para la conexión a la base de datos.
@@ -40,8 +38,6 @@ export default defineEventHandler(async (event) => { // Define un manejador de e
     }
 
     // Inserta el nuevo empleado en la base de datos.
-    console.log(`INSERT INTO requerimiento (CONSECREQUE, CODEMPLEADO, EMP_CODEMPLEADO, FECHAREQUE, SALARIOMAX, SALARIOMIN, DESCFUNCION, DESCCARRERAS, NVACANTES)
-    VALUES ('${CONSECREQUE}', '${CODEMPLEADO}', '${EMP_CODEMPLEADO}', TO_DATE('${FECHAREQUE}', 'DD-MM-YYYY'), '${body.SALARIOMAX}', '${body.SALARIOMIN}', '${body.DESCFUNCION}', '${body.DESCCARRERAS}', '${body.NVACANTES}') `)
     result = await connection.execute(`
     INSERT INTO requerimiento (CONSECREQUE, CODEMPLEADO, EMP_CODEMPLEADO, FECHAREQUE, SALARIOMAX, SALARIOMIN, DESCFUNCION, DESCCARRERAS, NVACANTES)
     VALUES ('${CONSECREQUE}', '${CODEMPLEADO}', '${EMP_CODEMPLEADO}', TO_DATE('${FECHAREQUE}', 'DD-MM-YYYY'), '${body.SALARIOMAX}', '${body.SALARIOMIN}', '${body.DESCFUNCION}', '${body.DESCCARRERAS}', '${body.NVACANTES}')
